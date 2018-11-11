@@ -1,0 +1,14 @@
+.timetable td {
+    font-family: dot_matrixregular;
+    color : orange; 
+    font-size: 1.2rem;
+}
+
+.timetable .line, .timetable .departure {
+    text-align: right;
+    vertical-align: top;
+}
+
+.timetable .line {padding-right : 10px;}
+
+.timetable .stopHeadSign { white-space: nowrap; }

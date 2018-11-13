@@ -1,19 +1,21 @@
 <div class="container timetable">
-  <h4>{{ (getSelectedStop()) }}</h4>
-  <table width="100%">
-    <thead>
-      <tr>
-        <th class="line">Service</th>
-        <th class="stopHeadSign">Destination</th>
-        <th class="departure">Departure</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let stopTime of (getEntries())">
-        <td class="line">{{ timeTable.data.references.routes[timeTable.data.references.trips[stopTime.tripId].routeId].shortName }}</td>
-        <td class="stopHeadSign">{{ stopTime.stopHeadsign }}</td>
-        <td class="departure">{{ ( getDepartureTime(stopTime)) }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="jumbotron">
+    <h4>{{ selectedStopName }} <span class="small">({{ selectedStopDirection }})</span></h4>
+    <table width="100%">
+      <thead>
+        <tr>
+          <th class="line">Service</th>
+          <th class="stopHeadSign">Destination</th>
+          <th class="departure">Departure</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stopTime of timeTable" class="{{ (stopTime['rowclass']) }}">
+          <td class="line">{{ stopTime['service'] }}</td>
+          <td class="stopHeadSign">{{ stopTime['destination'] }}</td>
+          <td class="departure">{{ stopTime['departure'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

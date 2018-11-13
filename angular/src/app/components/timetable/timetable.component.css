@@ -1,3 +1,7 @@
+.timetable .jumbotron {
+    padding: 1rem;
+}
+
 .timetable td {
     font-family: dot_matrixregular;
     color : orange; 
@@ -10,5 +14,3 @@
 }
 
 .timetable .line {padding-right : 10px;}
-
-.timetable .stopHeadSign { white-space: nowrap; }

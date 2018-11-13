@@ -1,59 +1,86 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { BkkService  } from '../../services/bkk.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-timetable',
   templateUrl: './timetable.component.html',
-  styleUrls: ['./timetable.component.css']
+  styleUrls: ['./timetable.component.css'],
 })
 
 export class TimetableComponent implements OnInit {
 
-  timeTable;
-  stops;
-  selectedStop = 'BKK_F02398';
+  timeTable: Array<Object>;
+  selectedStopId = 'BKK_F01017';
+  selectedStopName = 'Lógolyó utca';
+  selectedStopDirection = 'Buda felé';
+  blink;
 
-  constructor(private bkkService: BkkService) { }
+  constructor(private bkkService: BkkService) {
+    this.timeTable = new Array();
+    this.blink = false;
 
-  getSelectedStop() {
-    const key = Object.keys(this.timeTable.data.references.stops)[0];
-    return this.timeTable.data.references.stops[key].name;
+    const blinkCounter = interval(500);
+    blinkCounter.subscribe(n => {
+      this.blink = !this.blink;
+      Array.from(document.querySelectorAll('.blink')).forEach( element => {
+        element.setAttribute('style', 'opacity: ' + (this.blink ? '1' : '0'));
+      });
+    });
+
+    const reloadCounter = interval(15000);
+    reloadCounter.subscribe( n => {
+      this.loadTimetable(this.selectedStopId);
+    });
+
   }
 
-  getEntries() {
-    console.log(this.timeTable);
-    return this.timeTable.data.entry.stopTimes;
+  loadTimetable(stopId?: string) {
+    const data = this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
+      this.setTimeTable(arrivalsAndDeparturesForStop);
+      this.setSelectedStop(arrivalsAndDeparturesForStop);
+    });
   }
 
-  getDepartureTime(stopTime) {
-    const now = new Date();
-    let departureTime = '?';
-
+  private getDepartureTime(stopTime) {
+    let departureTime = new Date();
     if (stopTime.predictedDepartureTime) {
-      const predicted = new Date(stopTime.predictedDepartureTime * 1000);
-      const diff = (predicted.getTime() - now.getTime();
-      departureTime = Math.ceil(diff / (60 * 1000)) + '\'';
+      departureTime = new Date(stopTime.predictedDepartureTime * 1000);
     } else {
       if (stopTime.departureTime) {
-        const departure = new Date(stopTime.departureTime * 1000);
-        departureTime = departure.getHours() + ':' + departure.getMinutes();
+        departureTime = new Date(stopTime.departureTime * 1000);
       }
     }
     return departureTime;
   }
 
-  loadTimetable(stopId?: string) {
-    const data = this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (data) => {
-      console.log(data);
-      this.timeTable = data;
-    });
+  private getDepartureMinutes(departureTime: Date, now?: Date): Number {
+    const diff = departureTime.getTime() - now.getTime();
+    return Math.ceil(diff / (60 * 1000));
   }
 
-  loadStops() {
-    this.stops = this.bkkService.getStopsForLocation();
+  private setTimeTable(arrivalsAndDeparturesForStop) {
+    this.timeTable = new Array();
+    for (const stopTime of arrivalsAndDeparturesForStop.data.entry.stopTimes) {
+      const oneLine = new Object();
+      const routeId = arrivalsAndDeparturesForStop.data.references.trips[stopTime.tripId].routeId;
+      oneLine['service'] = arrivalsAndDeparturesForStop.data.references.routes[routeId].shortName;
+      oneLine['destination'] = stopTime.stopHeadsign;
+      const departureTime = this.getDepartureTime(stopTime);
+      const departureMinutes = this.getDepartureMinutes(departureTime, new Date());
+      oneLine['departure'] =  departureMinutes ? departureMinutes + '\'' : '';
+      oneLine['rowclass'] = (departureMinutes < 1 ? 'blink' : '');
+      this.timeTable.push(oneLine);
+    }
+  }
+
+  private setSelectedStop(arrivalsAndDeparturesForStop) {
+    const key = Object.keys(arrivalsAndDeparturesForStop.data.references.stops)[0];
+    this.selectedStopId = key;
+    this.selectedStopName = arrivalsAndDeparturesForStop.data.references.stops[key].name;
   }
 
   ngOnInit() {
-    this.loadTimetable(this.selectedStop);
+    this.loadTimetable(this.selectedStopId);
   }
 }

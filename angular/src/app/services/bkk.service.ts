@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { Http, RequestOptions, Headers } from '@angular/http';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-
-import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +15,8 @@ export class BkkService {
 
   getArrivalsAndDeparturesForStop(stopId: string) {
     let query = '/where/arrivals-and-departures-for-stop.json?includeReferences=agencies,routes,trips,stops&stopId=';
-    query = query + 'BKK_F02398';
+    query = query + stopId;
     query = query + '&minutesBefore=1&minutesAfter=30';
-
-    const options = new HttpHeaders({
-      'Content-Type': 'application/json', // Format set to JSON
-    });
-
     return this.http.get(this.api_root + query);
   }
 

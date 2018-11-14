@@ -21,16 +21,24 @@ export class TimetableComponent implements OnInit {
     this.blink = false;
 
     const blinkCounter = interval(500);
-    blinkCounter.subscribe(n => {
+    const blinkSubscription = blinkCounter.subscribe(n => {
       this.blink = !this.blink;
       Array.from(document.querySelectorAll('.blink')).forEach( element => {
         element.setAttribute('style', 'opacity: ' + (this.blink ? '1' : '0'));
       });
     });
 
-    const reloadCounter = interval(15000);
-    reloadCounter.subscribe( n => {
-      this.loadTimetable(this.selectedStopId);
+    const refreshTimer = interval(15000);
+    const refreshSubscription = refreshTimer.subscribe( n => {
+      if (n < 4) {
+        this.loadTimetable(this.selectedStopId);
+      } else {
+        refreshSubscription.unsubscribe();
+        Array.from(document.querySelectorAll('.blink')).forEach( element => {
+          element.removeAttribute('style');
+        });
+        blinkSubscription.unsubscribe();
+      }
     });
 
   }

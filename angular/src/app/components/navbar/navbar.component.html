@@ -5,14 +5,25 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Location <span class="sr-only">(current)</span></a>
+      <li class="nav-item" [ngClass]="{'active' : (activeComponent === appState.appComponents.TIMETABLE) }">
+        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.TIMETABLE" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          Timetable<span class="sr-only" *ngIf="(activeComponent === appState.appComponents.TIMETABLE)">(current)</span>
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Settings</a>
+      <li class="nav-item" [ngClass]="{'active' : (activeComponent === appState.appComponents.LOCATION) }">
+        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.LOCATION" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          Location<span class="sr-only" *ngIf="(activeComponent === appState.appComponents.LOCATION)">(current)</span>
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+      <li class="nav-item" [ngClass]="{'active' : (activeComponent === appState.appComponents.SETTINGS) }">
+        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.SETTINGS" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          Settings<span class="sr-only" *ngIf="(activeComponent === appState.appComponents.SETTINGS)">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item" [ngClass]="{'active' : (activeComponent === appState.appComponents.ABOUT) }">
+        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.ABOUT" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          About<span class="sr-only" *ngIf="(activeComponent === appState.appComponents.ABOUT)">(current)</span>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>

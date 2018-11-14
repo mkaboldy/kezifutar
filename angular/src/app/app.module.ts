@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
+
+import { AppstateService } from './services/appstate.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,8 +23,9 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientXsrfModule.withOptions({
       cookieName: 'My-Xsrf-Cookie',
       headerName: 'My-Xsrf-Header',
-    }), ],
-  providers: [],
+    }),
+  ],
+  providers: [AppstateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

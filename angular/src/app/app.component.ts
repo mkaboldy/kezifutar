@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppstateService } from 'src/app/services/appstate.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,17 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  title = 'Kézifutár';
+
+  activeComponent;
+
+  constructor(public appState: AppstateService) {}
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnInit() {
+    this.appState.activeComponentObservable.subscribe( (value) => {
+      this.activeComponent = value;
+    });
+    // init appstate
+    this.appState.activeComponent = this.appState.appComponents.LOCATION;
+  }
 }

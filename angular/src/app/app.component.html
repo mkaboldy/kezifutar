@@ -1,13 +1,16 @@
 <app-navbar></app-navbar>
 <main role="main" class="container">
-  <div id="timetable">
+  <div id="timetable" *ngIf="activeComponent === (appState.appComponents.TIMETABLE)">
     <app-timetable></app-timetable>
   </div>
-  <div id="location">    
+  <div id="location" *ngIf="activeComponent === (appState.appComponents.LOCATION)">
+    <p>Location!</p>
   </div>
-  <div id="language">    
+  <div id="settings" *ngIf="activeComponent === (appState.appComponents.SETTINGS)">    
+    <p>Settings!</p>
   </div>
-  <div id="about">    
+  <div id="about" *ngIf="activeComponent === (appState.appComponents.ABOUT)">
+    <p>About!</p>
   </div>
 </main>
 <app-footer></app-footer>

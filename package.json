@@ -1,0 +1,23 @@
+{
+  "name": "kezifutar",
+  "version": "1.0.0",
+  "description": "Browser app to implement a handheld departure board for BKK stops.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkaboldy/kezifutar.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkaboldy/kezifutar/issues"
+  },
+  "homepage": "https://github.com/mkaboldy/kezifutar#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  }
+}

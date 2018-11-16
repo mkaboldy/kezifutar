@@ -4,13 +4,13 @@
     <app-timetable></app-timetable>
   </div>
   <div id="location" *ngIf="activeComponent === (appState.appComponents.LOCATION)">
-    <p>Location!</p>
+    <app-location></app-location>
   </div>
   <div id="settings" *ngIf="activeComponent === (appState.appComponents.SETTINGS)">    
-    <p>Settings!</p>
+    <app-settings></app-settings>
   </div>
   <div id="about" *ngIf="activeComponent === (appState.appComponents.ABOUT)">
-    <p>About!</p>
+    <app-about></app-about>    
   </div>
 </main>
 <app-footer></app-footer>

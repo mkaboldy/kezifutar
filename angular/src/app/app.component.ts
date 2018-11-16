@@ -19,6 +19,6 @@ export class AppComponent {
       this.activeComponent = value;
     });
     // init appstate
-    this.appState.activeComponent = this.appState.appComponents.LOCATION;
+    this.appState.activeComponent = this.appState.appComponents.TIMETABLE;
   }
 }

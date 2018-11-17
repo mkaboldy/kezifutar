@@ -1,0 +1,5 @@
+.timetable .stop {color: white;}
+.timetable .stop.BUS, .timetable.stop.NIGHTBUS { color: deepskyblue/* rgb(0,124,176)*/ }
+.timetable .stop.TRAM { color: gold/* rgb(232,140,0)*/ }
+.timetable .stop.TROLLEYBUS {color: red}
+.timetable .stop.H5, .timetable.stop.H6, .timetable.stop.H7, .timetable.stop.H8 {color:limegreen/* rgb(0,200,0)*/}

@@ -5,28 +5,25 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" [ngClass]="{'active' : (appState.activeComponent === appState.appComponents.TIMETABLE) }">
-        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.TIMETABLE" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
-          Timetable<span class="sr-only" *ngIf="(appState.activeComponent === appState.appComponents.TIMETABLE)">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item" [ngClass]="{'active' : (appState.activeComponent === appState.appComponents.LOCATION) }">
-        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.LOCATION" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
-          Location<span class="sr-only" *ngIf="(appState.activeComponent === appState.appComponents.LOCATION)">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item" [ngClass]="{'active' : (appState.activeComponent === appState.appComponents.SETTINGS) }">
-        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.SETTINGS" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
-          Settings<span class="sr-only" *ngIf="(appState.activeComponent === appState.appComponents.SETTINGS)">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item" [ngClass]="{'active' : (appState.activeComponent === appState.appComponents.ABOUT) }">
-        <a class="nav-link" href="#" (click)="appState.activeComponent = appState.appComponents.ABOUT" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
-          About<span class="sr-only" *ngIf="(appState.activeComponent === appState.appComponents.ABOUT)">(current)</span>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'disabled' : (!appState.selectedStop)}" href="##timetable" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          Timetable
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link" href="##location" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          Location
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="##settings" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          Settings
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="##about" href="##about" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+          About
+        </a>
       </li>
     </ul>
   </div>

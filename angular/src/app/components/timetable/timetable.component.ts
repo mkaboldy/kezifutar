@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { BkkService  } from '../../services/bkk.service';
 import { AppstateService  } from '../../services/appstate.service';
-import { interval } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-timetable',
@@ -11,12 +11,12 @@ import { interval } from 'rxjs';
 
 export class TimetableComponent implements OnInit {
 
-  constructor(private bkkService: BkkService, protected  appState: AppstateService) {
-    this.appState.selectedStop$.subscribe((stop) => {
-      console.log('notification received');
-      console.log(stop);
-      this.renderTimeTable(stop);
-    });
+  private _stopSubscription: Subscription;
+  private _refreshSubscription: Subscription;
+
+  constructor(
+    private bkkService: BkkService,
+    public appState: AppstateService) {
   }
 
   renderTimeTable(stop) {
@@ -31,11 +31,11 @@ export class TimetableComponent implements OnInit {
       });
     });
 
-    const refreshSubscription = refreshTimer.subscribe( n => {
+    this._refreshSubscription = refreshTimer.subscribe( n => {
       if (n < 5 ) {
         this.loadTimetable(stop['id']);
       } else {
-        refreshSubscription.unsubscribe();
+        this._refreshSubscription.unsubscribe();
         Array.from(document.querySelectorAll('.blink')).forEach( element => {
           element.removeAttribute('style');
         });
@@ -89,5 +89,22 @@ export class TimetableComponent implements OnInit {
     this.appState.activeTimeTable = timeTable;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._stopSubscription =  this.appState.selectedStop$.subscribe(
+      (stop) => {
+        console.log('selectedStop change notification received');
+        console.log(stop);
+        this.renderTimeTable(stop);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this._stopSubscription.unsubscribe();
+    this._refreshSubscription.unsubscribe();
+    console.log('unsubscribed');
+  }
 }

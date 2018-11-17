@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppstateService } from '../../services/appstate.service';
 import { BkkService } from '../../services/bkk.service';
+import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
   selector: 'app-location',
@@ -9,10 +10,15 @@ import { BkkService } from '../../services/bkk.service';
 })
 export class LocationComponent implements OnInit {
 
-  geolocationPosition;
+  private _locationSubscription;
   availableStops;
+  currentLocation: Position;
 
-  constructor(protected  appState: AppstateService, private bkkService: BkkService) { }
+  constructor(
+    protected  appState: AppstateService,
+    private bkkService: BkkService,
+    private geolocationServcice: GeolocationService,
+    ) { }
 
   setAvailableStops(stopsForLocation) {
     this.availableStops = [];
@@ -22,44 +28,34 @@ export class LocationComponent implements OnInit {
 
   }
 
-  loadStops() {
-    const data = this.bkkService.getStopsForLocation(
-      this.geolocationPosition.coords.latitude,
-      this.geolocationPosition.coords.longitude)
+  loadStops(lat: number, lon: number) {
+    const data = this.bkkService.getStopsForLocation(lat, lon)
       .subscribe( (stopsForLocation) => {
         this.setAvailableStops(stopsForLocation);
+        data.unsubscribe();
     });
   }
 
   selectStop(stop: Object) {
     console.log('select stop clicked');
     this.appState.selectedStop = stop;
-    this.appState.activeComponent = this.appState.appComponents.TIMETABLE;
   }
 
   ngOnInit() {
-    if (window.navigator && window.navigator.geolocation) {
-      window.navigator.geolocation.watchPosition(
-        position => {
-          this.geolocationPosition = position;
-          this.loadStops();
-          console.log(position);
-          },
-          error => {
-              switch (error.code) {
-                  case 1:
-                      console.log('Permission Denied');
-                      break;
-                  case 2:
-                      console.log('Position Unavailable');
-                      break;
-                  case 3:
-                      console.log('Timeout');
-                      break;
-              }
-          }
-      );
-    }
+    this._locationSubscription = this.geolocationServcice.getLocation().subscribe(
+      (position: Position) => {
+        if (this.currentLocation !== position) {
+          this.currentLocation = position;
+          this.loadStops(position.coords.latitude, position.coords.longitude);
+        }
+      },
+      (error: PositionError) => {
+        console.log(error);
+      }
+    );
   }
 
+  ngOnDestroy() {
+    this._locationSubscription.unsubscribe();
+  }
 }

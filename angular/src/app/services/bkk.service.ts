@@ -18,7 +18,6 @@ export class BkkService {
 
   getStopsForLocation(lat: number, lon: number) {
     const query = this.apiRoot + '/stops/' + lat + '/' + lon;
-    console.log(query);
     return this.http.get(query);
   }
 }

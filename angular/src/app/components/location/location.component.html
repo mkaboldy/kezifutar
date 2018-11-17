@@ -1,9 +1,34 @@
-<h2 class="page-header">Your location</h2>
-<p>
-      GeoPosition: {{geolocationPosition.coords.latitude}},{{geolocationPosition.coords.longitude}}
-</p>
-<ul>
-      <li *ngFor="let stop of availableStops">
-            <a class="stop {{stop.stopColorType}}" href="#" (click)="selectStop(stop)">{{ stop.type }} {{ stop.name }}</a>
-      </li>
-</ul>
+<div class="container timetable">
+      <div class="jumbotron">
+            <div>
+                  <h4 class="page-header">Your location</h4>
+                  <div>Your current geoposition: 
+                        <a href="https://www.google.com/maps/@{{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}},15z" target="_blank">
+                              {{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}}
+                        </a>
+                  </div>
+            </div>      
+            <div>
+                  <h4>Stations near you:{{ availableStops.length}}</h4>
+                  <ul>
+                        <li *ngFor="let stop of availableStops">
+                              <a class="stop {{stop.stopColorType}}" href="#" (click)="selectStop(stop)">{{ stop.name }}</a>
+                        </li>
+                  </ul>
+            </div>
+            <div>
+                  <h4>Popular locations:</h4>
+                  <ul>
+                        <li>
+                              <a class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F01017', type: 'BUS', name: 'Astoria'})">Astoria</a>
+                        </li>
+                        <li>
+                              <a class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F00667', type: 'BUS', name: 'Aquincum'})">Aquincum</a>
+                        </li>
+                        <li>
+                              <a class="stop BUS" href="#" (click)="selectStop({id: 'BKK_062607', type: 'BUS', name: 'Infopark'})">Infopark</a>
+                        </li>
+                  </ul>
+            </div>
+      </div>
+</div>

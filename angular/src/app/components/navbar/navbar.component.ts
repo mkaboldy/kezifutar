@@ -9,9 +9,7 @@ import { AppstateService } from 'src/app/services/appstate.service';
 
 export class NavbarComponent implements OnInit {
 
-  activeComponent;
-
-  constructor(protected appState: AppstateService) { }
+  constructor(public appState: AppstateService) { }
 
   ngOnInit() { }
 }

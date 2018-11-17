@@ -11,14 +11,12 @@ export class AppComponent {
 
   activeComponent;
 
-  constructor(public appState: AppstateService) {}
+  constructor(protected appState: AppstateService) {}
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
-    this.appState.activeComponentObservable.subscribe( (value) => {
-      this.activeComponent = value;
-    });
     // init appstate
-    this.appState.activeComponent = this.appState.appComponents.TIMETABLE;
+    this.appState.activeComponent = this.appState.activeTimeTable
+    ? this.appState.appComponents.TIMETABLE : this.appState.appComponents.LOCATION;
   }
 }

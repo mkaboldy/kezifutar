@@ -9,9 +9,7 @@ export class BkkService {
 
   private apiRoot = 'https://192.168.0.14:8443/api';
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
 
   getArrivalsAndDeparturesForStop(stopId: string) {
     const query = this.apiRoot + '/departures/' + stopId;
@@ -20,6 +18,7 @@ export class BkkService {
 
   getStopsForLocation(lat: number, lon: number) {
     const query = this.apiRoot + '/stops/' + lat + '/' + lon;
+    console.log(query);
     return this.http.get(query);
   }
 }

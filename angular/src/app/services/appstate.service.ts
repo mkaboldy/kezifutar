@@ -1,13 +1,10 @@
 import { Injectable} from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 
 export class AppstateService {
 
-  public activeComponentObservable = new Subject<any>();
   public appComponents = {
       TIMETABLE: 1,
       LOCATION: 2,
@@ -15,13 +12,31 @@ export class AppstateService {
       ABOUT: 4
   };
 
-  constructor() {}
+  public activeComponent: number;
 
-  emitActiveComponent(val) {
-    this.activeComponentObservable.next(val);
+  private _selectedStop: object;
+  private _observableSelectedStopSource = new BehaviorSubject<Object>({});
+  public selectedStop$ = this._observableSelectedStopSource.asObservable();
+
+  public observableTimeTable = new Subject();
+  private _activeTimeTable: Array<object>;
+
+  set selectedStop(stop: object) {
+    console.log('stop selected');
+    this._selectedStop = stop;
+    this._observableSelectedStopSource.next(this._selectedStop);
   }
 
-  set activeComponent(module) {
-      this.emitActiveComponent(module);
+  get selectedStop() {
+    return this._selectedStop;
+  }
+
+  set activeTimeTable(timeTable: Array<object>) {
+    this._activeTimeTable = timeTable;
+    this.observableTimeTable.next(this._activeTimeTable);
+  }
+
+  get activeTimeTable() {
+    return this._activeTimeTable;
   }
 }

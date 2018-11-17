@@ -11,11 +11,7 @@ export class NavbarComponent implements OnInit {
 
   activeComponent;
 
-  constructor(public appState: AppstateService) { }
+  constructor(protected appState: AppstateService) { }
 
-  ngOnInit() {
-    this.appState.activeComponentObservable.subscribe( (value) => {
-      this.activeComponent = value;
-    });
-  }
+  ngOnInit() { }
 }

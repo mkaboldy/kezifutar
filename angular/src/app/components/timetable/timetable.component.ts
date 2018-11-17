@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { BkkService  } from '../../services/bkk.service';
+import { AppstateService  } from '../../services/appstate.service';
 import { interval } from 'rxjs';
 
 @Component({
@@ -10,28 +11,29 @@ import { interval } from 'rxjs';
 
 export class TimetableComponent implements OnInit {
 
-  timeTable: Array<Object>;
-  selectedStopId = 'BKK_F01017';
-  selectedStopName = 'Lógolyó utca';
-  selectedStopDirection = 'Buda felé';
-  blink;
+  constructor(private bkkService: BkkService, protected  appState: AppstateService) {
+    this.appState.selectedStop$.subscribe((stop) => {
+      console.log('notification received');
+      console.log(stop);
+      this.renderTimeTable(stop);
+    });
+  }
 
-  constructor(private bkkService: BkkService) {
-    this.timeTable = new Array();
-    this.blink = false;
-
-    const blinkCounter = interval(500);
-    const blinkSubscription = blinkCounter.subscribe(n => {
-      this.blink = !this.blink;
+  renderTimeTable(stop) {
+    this.loadTimetable(stop['id']);
+    const refreshTimer = interval(15000);
+    const blinkTimer = interval(500);
+    let blink = false;
+    const blinkSubscription = blinkTimer.subscribe(n => {
+      blink = !blink;
       Array.from(document.querySelectorAll('.blink')).forEach( element => {
-        element.setAttribute('style', 'opacity: ' + (this.blink ? '1' : '0'));
+        element.setAttribute('style', 'opacity: ' + (blink ? '1' : '0'));
       });
     });
 
-    const refreshTimer = interval(15000);
     const refreshSubscription = refreshTimer.subscribe( n => {
-      if (n < 4) {
-        this.loadTimetable(this.selectedStopId);
+      if (n < 5 ) {
+        this.loadTimetable(stop['id']);
       } else {
         refreshSubscription.unsubscribe();
         Array.from(document.querySelectorAll('.blink')).forEach( element => {
@@ -40,14 +42,16 @@ export class TimetableComponent implements OnInit {
         blinkSubscription.unsubscribe();
       }
     });
-
   }
 
   loadTimetable(stopId?: string) {
-    const data = this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
-      this.setTimeTable(arrivalsAndDeparturesForStop);
-      this.setSelectedStop(arrivalsAndDeparturesForStop);
-    });
+    if (stopId) {
+      this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
+        console.log('returned arrivalsAndDeparturesForStop:');
+        console.log(arrivalsAndDeparturesForStop);
+        this.setTimeTable(arrivalsAndDeparturesForStop);
+      });
+    }
   }
 
   private getDepartureTime(stopTime) {
@@ -68,7 +72,9 @@ export class TimetableComponent implements OnInit {
   }
 
   private setTimeTable(arrivalsAndDeparturesForStop) {
-    this.timeTable = new Array();
+    const timeTable = new Array();
+    console.log('processing arrivalsAndDeparturesForStop:');
+    console.log(arrivalsAndDeparturesForStop);
     for (const stopTime of arrivalsAndDeparturesForStop.data.entry.stopTimes) {
       const oneLine = new Object();
       const routeId = arrivalsAndDeparturesForStop.data.references.trips[stopTime.tripId].routeId;
@@ -78,17 +84,10 @@ export class TimetableComponent implements OnInit {
       const departureMinutes = this.getDepartureMinutes(departureTime, new Date());
       oneLine['departure'] =  departureMinutes ? departureMinutes + '\'' : '';
       oneLine['rowclass'] = (departureMinutes < 1 ? 'blink' : '');
-      this.timeTable.push(oneLine);
+      timeTable.push(oneLine);
     }
+    this.appState.activeTimeTable = timeTable;
   }
 
-  private setSelectedStop(arrivalsAndDeparturesForStop) {
-    const key = Object.keys(arrivalsAndDeparturesForStop.data.references.stops)[0];
-    this.selectedStopId = key;
-    this.selectedStopName = arrivalsAndDeparturesForStop.data.references.stops[key].name;
-  }
-
-  ngOnInit() {
-    this.loadTimetable(this.selectedStopId);
-  }
+  ngOnInit() { }
 }

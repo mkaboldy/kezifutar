@@ -1,15 +1,15 @@
 <app-navbar></app-navbar>
 <main role="main" class="container">
-  <div id="timetable" *ngIf="activeComponent === (appState.appComponents.TIMETABLE)">
+  <div id="timetable" *ngIf="appState.activeComponent === (appState.appComponents.TIMETABLE)">
     <app-timetable></app-timetable>
   </div>
-  <div id="location" *ngIf="activeComponent === (appState.appComponents.LOCATION)">
+  <div id="location" *ngIf="appState.activeComponent === (appState.appComponents.LOCATION)">
     <app-location></app-location>
   </div>
-  <div id="settings" *ngIf="activeComponent === (appState.appComponents.SETTINGS)">    
+  <div id="settings" *ngIf="appState.activeComponent === (appState.appComponents.SETTINGS)">    
     <app-settings></app-settings>
   </div>
-  <div id="about" *ngIf="activeComponent === (appState.appComponents.ABOUT)">
+  <div id="about" *ngIf="appState.activeComponent === (appState.appComponents.ABOUT)">
     <app-about></app-about>    
   </div>
 </main>

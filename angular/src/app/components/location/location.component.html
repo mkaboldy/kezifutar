@@ -1,4 +1,9 @@
 <h2 class="page-header">Your location</h2>
 <p>
-      GeoPosition: {{geolocationPosition | json }}
+      GeoPosition: {{geolocationPosition.coords.latitude}},{{geolocationPosition.coords.longitude}}
 </p>
+<ul>
+      <li *ngFor="let stop of availableStops">
+            <a class="stop {{stop.stopColorType}}" href="#" (click)="selectStop(stop)">{{ stop.type }} {{ stop.name }}</a>
+      </li>
+</ul>

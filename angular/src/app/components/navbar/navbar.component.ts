@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppstateService } from 'src/app/services/appstate.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ import { AppstateService } from 'src/app/services/appstate.service';
 
 export class NavbarComponent implements OnInit {
 
-  constructor(public appState: AppstateService) { }
+  constructor(public appState: AppstateService, public router: RouterModule) { }
 
   ngOnInit() { }
 }

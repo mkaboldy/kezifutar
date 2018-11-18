@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppstateService } from '../../services/appstate.service';
 import { BkkService } from '../../services/bkk.service';
 import { GeolocationService } from '../../services/geolocation.service';
@@ -10,7 +11,6 @@ import { GeolocationService } from '../../services/geolocation.service';
 })
 export class LocationComponent implements OnInit {
 
-  private _locationSubscription;
   availableStops;
   currentLocation: Position;
 
@@ -18,6 +18,8 @@ export class LocationComponent implements OnInit {
     protected  appState: AppstateService,
     private bkkService: BkkService,
     private geolocationServcice: GeolocationService,
+    private router: Router,
+    private route: ActivatedRoute,
     ) { }
 
   setAvailableStops(stopsForLocation) {
@@ -25,7 +27,6 @@ export class LocationComponent implements OnInit {
     for (const stop of stopsForLocation.data.list) {
       this.availableStops.push(stop);
     }
-
   }
 
   loadStops(lat: number, lon: number) {
@@ -37,25 +38,35 @@ export class LocationComponent implements OnInit {
   }
 
   selectStop(stop: Object) {
-    console.log('select stop clicked');
-    this.appState.selectedStop = stop;
+    this.router.navigate(['/timetable/' + stop['id']]);
+    return false;
   }
 
   ngOnInit() {
-    this._locationSubscription = this.geolocationServcice.getLocation().subscribe(
-      (position: Position) => {
-        if (this.currentLocation !== position) {
-          this.currentLocation = position;
-          this.loadStops(position.coords.latitude, position.coords.longitude);
+    const paramLat = parseFloat(this.route.snapshot.paramMap.get('lat'));
+    const paramLon = parseFloat(this.route.snapshot.paramMap.get('lon'));
+
+    if (paramLat && paramLon) {
+      this.loadStops(paramLat, paramLon);
+    } else {
+      const locationSubscription = this.geolocationServcice.getLocation().subscribe(
+        (position: Position) => {
+          if (this.currentLocation !== position) {
+            this.currentLocation = position;
+            this.loadStops(position.coords.latitude, position.coords.longitude);
+          }
+        },
+        (error: PositionError) => {
+          console.log(error);
+        },
+        () => {
+          locationSubscription.unsubscribe();
         }
-      },
-      (error: PositionError) => {
-        console.log(error);
-      }
-    );
+
+      );
+    }
   }
 
   ngOnDestroy() {
-    this._locationSubscription.unsubscribe();
   }
 }

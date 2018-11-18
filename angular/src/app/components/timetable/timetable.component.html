@@ -1,6 +1,6 @@
 <div class="container timetable">
   <div class="jumbotron">
-    <h4 class="stop {{ appState.selectedStop['stopColorType']}}">{{ appState.selectedStop['type'] }} {{ appState.selectedStop['name'] }} <span class="small">({{ appState.selectedStop['id'] }})</span></h4>
+    <h4 class="stop {{ appState.selectedStop['stopColorType']}}">{{ appState.selectedStop['name'] }} <span class="small">({{ appState.selectedStop['id'] }})</span></h4>
     <table width="100%">
       <thead>
         <tr>
@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let stopTime of appState.activeTimeTable" class="{{ (stopTime['rowclass']) }}">
+        <tr *ngFor="let stopTime of timeTable" class="{{ (stopTime['rowclass']) }}">
           <td class="line">{{ stopTime['service'] }}</td>
           <td class="stopHeadSign">{{ stopTime['destination'] }}</td>
           <td class="departure">{{ stopTime['departure'] }}</td>

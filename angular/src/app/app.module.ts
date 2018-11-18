@@ -13,6 +13,18 @@ import { LocationComponent } from './components/location/location.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', redirectTo: '/location', pathMatch: 'full'},
+  { path: 'timetable/:stopId', component: TimetableComponent },
+  { path: 'timetable',  redirectTo: '/location', pathMatch: 'full'},
+  { path: 'location/:lat/:lon', component: LocationComponent },
+  { path: 'settings', component: SettingsComponent},
+  { path: 'about', component: AboutComponent},
+  { path: '**', component: LocationComponent }
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +42,9 @@ import { AboutComponent } from './components/about/about.component';
       cookieName: 'My-Xsrf-Cookie',
       headerName: 'My-Xsrf-Header',
     }),
+    RouterModule.forRoot(
+      appRoutes
+    ),
   ],
   providers: [AppstateService],
   bootstrap: [AppComponent]

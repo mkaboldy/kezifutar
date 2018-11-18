@@ -1,17 +1,6 @@
 <app-navbar></app-navbar>
 <main role="main" class="container">  
-  <div id="timetable" *ngIf="appState.selectedStop">
-    <app-timetable></app-timetable>
-  </div>
-  <div id="location" >
-    <app-location></app-location>
-  </div>
-  <div id="settings" *ngIf="false">    
-    <app-settings></app-settings>
-  </div>
-  <div id="about">
-    <app-about></app-about>    
-  </div>
-</main>
+    <router-outlet></router-outlet>
+</main>    
 <app-footer></app-footer>
 

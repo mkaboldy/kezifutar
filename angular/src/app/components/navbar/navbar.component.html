@@ -6,22 +6,22 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" [ngClass]="{'disabled' : (!appState.selectedStop)}" href="##timetable" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+        <a class="nav-link" routerLink="/timetable/{{ appState.selectedStop['id'] }}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{'disabled' : (!appState.selectedStop)}">
           Timetable
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="##location" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+        <a class="nav-link" routerLink="/location" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           Location
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="##settings" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+        <a class="nav-link" routerLink="/settings" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           Settings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="##about" href="##about" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse">
+        <a class="nav-link" routerLink="/about" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           About
         </a>
       </li>

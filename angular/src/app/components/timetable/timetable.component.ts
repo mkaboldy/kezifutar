@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BkkService  } from '../../services/bkk.service';
 import { AppstateService  } from '../../services/appstate.service';
 import { interval, Subscription } from 'rxjs';
@@ -11,15 +12,18 @@ import { interval, Subscription } from 'rxjs';
 
 export class TimetableComponent implements OnInit {
 
-  private _stopSubscription: Subscription;
-  private _refreshSubscription: Subscription;
+  private _refreshSubscription: Subscription = new Subscription();
+  public timeTable;
 
   constructor(
     private bkkService: BkkService,
+    private router: Router,
+    private route: ActivatedRoute,
     public appState: AppstateService) {
   }
 
   renderTimeTable(stop) {
+    this._refreshSubscription.unsubscribe();
     this.loadTimetable(stop['id']);
     const refreshTimer = interval(15000);
     const blinkTimer = interval(500);
@@ -31,26 +35,40 @@ export class TimetableComponent implements OnInit {
       });
     });
 
-    this._refreshSubscription = refreshTimer.subscribe( n => {
-      if (n < 5 ) {
-        this.loadTimetable(stop['id']);
-      } else {
+    this._refreshSubscription = refreshTimer.subscribe(
+      (n) => {
+        if (n < 5 ) {
+          this.loadTimetable(stop['id']);
+        } else {
+          this._refreshSubscription.unsubscribe();
+          Array.from(document.querySelectorAll('.blink')).forEach( element => {
+            element.removeAttribute('style');
+          });
+          blinkSubscription.unsubscribe();
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
         this._refreshSubscription.unsubscribe();
-        Array.from(document.querySelectorAll('.blink')).forEach( element => {
-          element.removeAttribute('style');
-        });
-        blinkSubscription.unsubscribe();
       }
-    });
+
+    );
   }
 
   loadTimetable(stopId?: string) {
     if (stopId) {
-      this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
-        console.log('returned arrivalsAndDeparturesForStop:');
-        console.log(arrivalsAndDeparturesForStop);
-        this.setTimeTable(arrivalsAndDeparturesForStop);
-      });
+      const subscription = this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
+          this.setTimeTable(arrivalsAndDeparturesForStop);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          subscription.unsubscribe();
+        }
+      );
     }
   }
 
@@ -73,8 +91,6 @@ export class TimetableComponent implements OnInit {
 
   private setTimeTable(arrivalsAndDeparturesForStop) {
     const timeTable = new Array();
-    console.log('processing arrivalsAndDeparturesForStop:');
-    console.log(arrivalsAndDeparturesForStop);
     for (const stopTime of arrivalsAndDeparturesForStop.data.entry.stopTimes) {
       const oneLine = new Object();
       const routeId = arrivalsAndDeparturesForStop.data.references.trips[stopTime.tripId].routeId;
@@ -86,25 +102,21 @@ export class TimetableComponent implements OnInit {
       oneLine['rowclass'] = (departureMinutes < 1 ? 'blink' : '');
       timeTable.push(oneLine);
     }
-    this.appState.activeTimeTable = timeTable;
+    this.timeTable = timeTable;
+    this.appState.selectedStop = arrivalsAndDeparturesForStop.data.references.stops[this.appState.selectedStop['id']];
   }
 
   ngOnInit() {
-    this._stopSubscription =  this.appState.selectedStop$.subscribe(
-      (stop) => {
-        console.log('selectedStop change notification received');
-        console.log(stop);
-        this.renderTimeTable(stop);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    const paramStopId = this.route.snapshot.paramMap.get('stopId');
+    if (paramStopId) {
+      this.appState.selectedStop = { id : paramStopId };
+      this.renderTimeTable( this.appState.selectedStop );
+    } else {
+      this.renderTimeTable(this.appState.selectedStop);
+    }
   }
 
   ngOnDestroy() {
-    this._stopSubscription.unsubscribe();
     this._refreshSubscription.unsubscribe();
-    console.log('unsubscribed');
   }
 }

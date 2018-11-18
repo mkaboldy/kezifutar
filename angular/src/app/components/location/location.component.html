@@ -1,18 +1,20 @@
-<div class="container timetable">
+<div class="container location">
       <div class="jumbotron">
             <div>
                   <h4 class="page-header">Your location</h4>
-                  <div>Your current geoposition: 
-                        <a href="https://www.google.com/maps/@{{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}},15z" target="_blank">
+                  <div>Your current geoposition:
+                        <a href="https://www.google.com/maps/@{{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}},15z"
+                              target="_blank">
                               {{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}}
                         </a>
                   </div>
-            </div>      
+            </div>
             <div>
-                  <h4>Stations near you:{{ availableStops.length}}</h4>
+                  <h4>Stations near you:</h4>
                   <ul>
                         <li *ngFor="let stop of availableStops">
-                              <a class="stop {{stop.stopColorType}}" href="#" (click)="selectStop(stop)">{{ stop.name }}</a>
+                              <a class="stop {{stop.stopColorType}}" routerLink="/timetable/{{stop.id}}">{{ stop.name
+                                    }}</a>
                         </li>
                   </ul>
             </div>

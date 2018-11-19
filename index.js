@@ -21,12 +21,16 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/angular/dist/angular/index.html'));
 });
 
-const privateKey  = fs.readFileSync(config.ssl_key, 'utf8');
-const certificate = fs.readFileSync(config.ssl_cert, 'utf8');
-const credentials = {key: privateKey, cert: certificate};
-
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
 httpServer.listen(config.http_port, config.http_host);
-httpsServer.listen(config.https_port, config.https_host);
+
+if (config.ssl_key && config.ssl_cert&& config.https_host && config.https_port) {
+    const privateKey  = fs.readFileSync(config.ssl_key, 'utf8');
+    const certificate = fs.readFileSync(config.ssl_cert, 'utf8');
+    const credentials = {key: privateKey, cert: certificate};
+
+    const httpsServer = https.createServer(credentials, app);
+
+    httpsServer.listen(config.https_port, config.https_host);
+}
+

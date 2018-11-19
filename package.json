@@ -26,5 +26,8 @@
   },
   "engines": {
     "node": "8.x"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^0.10.6"
   }
 }

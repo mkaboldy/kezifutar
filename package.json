@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "postinstall": "cd angular && ng build --aot --prod"
-  },
+    "start": "node index.js"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mkaboldy/kezifutar.git"
@@ -27,7 +26,5 @@
   "engines": {
     "node": "8.x"
   },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^0.10.6"
-  }
+  "devDependencies": {}
 }

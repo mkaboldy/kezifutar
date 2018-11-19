@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'PixelBerry';
+    src: url('pixel_berry_08_84_ltd.edition-webfont.woff2') format('woff2'),
+         url('pixel_berry_08_84_ltd.edition-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'helloveticaregular';
+    src: url('hellovetica-webfont.woff2') format('woff2'),
+         url('hellovetica-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'dot_matrixregular';
+    src: url('dot-matrix_14317-webfont.woff2') format('woff2'),
+         url('dot-matrix_14317-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -6,8 +6,8 @@ module.exports = (router) => {
 
     router.get('/stops/:lat/:lon', (req,res)=>{        
         const endPoint = 'stops-for-location.json';
-        const lat = req.params.lat; // 47.500437128276;
-        const lon = req.params.lon; // 19.072480705261;
+        const lat = req.params.lat;
+        const lon = req.params.lon;
         const discoveryRadius = 0.005;
         const latSpan = discoveryRadius;
         const lonSpan = discoveryRadius;

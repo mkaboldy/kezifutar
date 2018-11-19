@@ -66,7 +66,4 @@ export class LocationComponent implements OnInit {
       );
     }
   }
-
-  ngOnDestroy() {
-  }
 }

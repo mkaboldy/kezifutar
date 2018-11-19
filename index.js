@@ -42,7 +42,12 @@ const http_host = config.http_host;
 console.log("process.env.NODE_ENV:");
 console.log(process.env.NODE_ENV);
 console.log("starting server " + http_host + ":" + http_port);
-httpServer.listen(http_port, http_host);
+if (http_host) {
+    httpServer.listen(http_port, http_host);
+} else {
+    httpServer.listen(http_port);
+}
+
 
 if (config.ssl_key && config.ssl_cert && config.https_host && config.https_port) {
     const privateKey  = fs.readFileSync(config.ssl_key, 'utf8');

@@ -17,13 +17,19 @@ your-folder> git checkout https://github.com/mkaboldy/kezifutar.git
 your-folder> npm update
 ```
 
-### adjust config:
+### configure your local environment:
+
+- define an enviromnet var:
 
 ```
-your-folder/config> vi default.json
+your-folder/config> $env:NODE_ENV="your-env"
 ```
 
-(or specify own environment **$env:NODE_ENV="yourenv"** and build your own config, **yourenv.json** )
+- create a config file based on your-folder/config/example.js 
+
+```
+vi your-folder/config/your-env.js
+```
 
 ### run the server:
 

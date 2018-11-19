@@ -5,24 +5,26 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"    
+    "start": "node index.js",
+    "postinstall": "cd angular && ng build --aot --prod"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mkaboldy/kezifutar.git"
   },
-  "author": "",
+  "author": "mkaboldy",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mkaboldy/kezifutar/issues"
   },
   "homepage": "https://github.com/mkaboldy/kezifutar#readme",
   "dependencies": {
-    "config": "^2.0.1",
+    "@angular/cli": "^7.0.6",
+    "@angular/compiler-cli": "^7.0.4",
     "cors": "^2.8.5",
     "express": "^4.16.4"
   },
   "engines": {
     "node": "8.x"
-  }  
+  }
 }

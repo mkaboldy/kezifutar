@@ -8,7 +8,20 @@ const api = require('./api')(router);
 const path = require('path'); 
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const config = require('config');
+
+if (typeof process.env.NODE_ENV === 'undefined') {
+    console.log('1. Specify environment $env:NODE_ENV="your-env"');
+    console.log('2. Create environment config file ./config/your-env.js');
+    process.exit(1);
+}
+
+const configFile = __dirname + '/config/' + process.env.NODE_ENV + '.js';
+
+if (!fs.existsSync(configFile)) {
+    console.log('Missing config file ' + configFile);
+}
+
+const config = require(configFile);
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,15 +35,22 @@ app.get('*', (req, res) => {
 });
 
 const httpServer = http.createServer(app);
-httpServer.listen(config.http_port, config.http_host);
 
-if (config.ssl_key && config.ssl_cert&& config.https_host && config.https_port) {
+const http_port = config.http_port;
+const http_host = config.http_host;
+
+console.log("process.env.NODE_ENV:");
+console.log(process.env.NODE_ENV);
+console.log("starting server " + http_host + ":" + http_port);
+httpServer.listen(http_port, http_host);
+
+if (config.ssl_key && config.ssl_cert && config.https_host && config.https_port) {
     const privateKey  = fs.readFileSync(config.ssl_key, 'utf8');
     const certificate = fs.readFileSync(config.ssl_cert, 'utf8');
     const credentials = {key: privateKey, cert: certificate};
 
     const httpsServer = https.createServer(credentials, app);
-
+    console.log("starting https server " + config.https_host + ":" + config.https_port);
     httpsServer.listen(config.https_port, config.https_host);
 }
 

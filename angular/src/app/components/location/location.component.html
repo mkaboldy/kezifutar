@@ -12,9 +12,12 @@
             <div>
                   <h4>Stations near you:</h4>
                   <ul>
-                        <li *ngFor="let stop of availableStops">
-                              <a class="stop {{stop.stopColorType}}" routerLink="/timetable/{{stop.id}}">{{ stop.name
-                                    }}</a>
+                        <li *ngFor="let stop of availableStops">                        
+                              <a (click)="collapseNav()" class="stop {{stop.stopColorType}}" routerLink="/timetable/{{stop.id}}">
+                                    <span *ngIf="appState.selectedStop['id'] === stop.id">&raquo;</span>
+                                    {{ stop.name}}
+                                    <span *ngIf="appState.selectedStop['id'] === stop.id">&laquo;</span>
+                              </a>
                         </li>
                   </ul>
             </div>
@@ -22,13 +25,13 @@
                   <h4>Popular locations:</h4>
                   <ul>
                         <li>
-                              <a class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F01017', type: 'BUS', name: 'Astoria'})">Astoria</a>
+                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F01017', type: 'BUS', name: 'Astoria'})">Astoria</a>
                         </li>
                         <li>
-                              <a class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F00667', type: 'BUS', name: 'Aquincum'})">Aquincum</a>
+                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F00667', type: 'BUS', name: 'Aquincum'})">Aquincum</a>
                         </li>
                         <li>
-                              <a class="stop BUS" href="#" (click)="selectStop({id: 'BKK_062607', type: 'BUS', name: 'Infopark'})">Infopark</a>
+                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_062607', type: 'BUS', name: 'Infopark'})">Infopark</a>
                         </li>
                   </ul>
             </div>

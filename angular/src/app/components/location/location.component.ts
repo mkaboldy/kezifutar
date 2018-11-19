@@ -42,6 +42,13 @@ export class LocationComponent implements OnInit {
     return false;
   }
 
+  // TODO refactor this
+  collapseNav() {
+    if (document.getElementById('navbarCollapse').getAttribute('class').split(' ').findIndex(a => a === 'show') !== -1) {
+      document.getElementById('navbarToggler').click();
+    }
+  }
+
   ngOnInit() {
     const paramLat = parseFloat(this.route.snapshot.paramMap.get('lat'));
     const paramLon = parseFloat(this.route.snapshot.paramMap.get('lon'));

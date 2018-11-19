@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AppstateService } from 'src/app/services/appstate.service';
 import { RouterModule } from '@angular/router';
 
@@ -9,8 +9,12 @@ import { RouterModule } from '@angular/router';
 })
 
 export class NavbarComponent implements OnInit {
-
   constructor(public appState: AppstateService, public router: RouterModule) { }
+
+  // TODO refactor this
+  collapseNav() {
+    document.getElementById('navbarToggler').click();
+  }
 
   ngOnInit() { }
 }

@@ -1,27 +1,27 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="#"><img src="assets/images/bkk-logo.png" alt="logo"/></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+  <button id="navbarToggler" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/timetable/{{ appState.selectedStop['id'] }}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{'disabled' : (!appState.selectedStop)}">
+        <a (click)="collapseNav()" class="nav-link" routerLink="/timetable/{{ appState.selectedStop['id'] }}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}" [ngClass]="{'disabled' : (!appState.selectedStop['id'])}">
           Timetable
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/location" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="collapseNav()" class="nav-link" routerLink="/location" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           Location
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/settings" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="collapseNav()" class="nav-link" routerLink="/settings" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           Settings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/about" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" aria-controls="navbarCollapse" data-toggle="collapse" data-target="#navbarCollapse">
+        <a (click)="collapseNav()" class="nav-link" routerLink="/about" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           About
         </a>
       </li>

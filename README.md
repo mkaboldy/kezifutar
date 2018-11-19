@@ -5,9 +5,18 @@ WIP
 
 ## dev config:
 
+### prerequisites:
 
+install git https://tortoisegit.org/download/
+install nodejs https://nodejs.org/en/download/
 
-your-folder>npm install https://github.com/mkaboldy/kezifutar.git
-your-folder>npm nodemon index.js
-your-folder/angular>ng serve --host 192.168.0.14 --ssl
+### clone, build and run project:
+
+your-folder> git checkout https://github.com/mkaboldy/kezifutar.git
+your-folder> npm update
+your-folder> npm install -g nodemon
+your-folder> nodemon index.js
+your-folder/angular> npm update
+your-folder/angular> ng serve --host <your-ip> --ssl
+https://<your-IP>:<your-port>
 

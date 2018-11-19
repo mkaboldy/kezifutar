@@ -8,4 +8,10 @@ export class AppstateService {
 
   public lastPosition: Position;
 
+  constructor () {
+    this.selectedStop = {
+      id: '',
+      name: ''
+    };
+  }
 }

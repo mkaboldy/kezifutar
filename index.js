@@ -43,8 +43,10 @@ console.log("process.env.NODE_ENV:");
 console.log(process.env.NODE_ENV);
 console.log("starting server " + http_host + ":" + http_port);
 if (http_host) {
+    console.log("starting server " + http_host + ":" + http_port);
     httpServer.listen(http_port, http_host);
 } else {
+    console.log("starting server on port " + http_port);
     httpServer.listen(http_port);
 }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class BkkService {
 
-  private apiRoot = 'https://192.168.0.14:8443/api';
+  private apiRoot = environment.api_root;
 
   constructor(private http: HttpClient) { }
 

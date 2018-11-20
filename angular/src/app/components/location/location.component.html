@@ -1,37 +1,65 @@
 <div class="container location">
       <div class="jumbotron">
-            <div>
-                  <h4 class="page-header">Your location</h4>
-                  <div>Your current geoposition:
-                        <a href="https://www.google.com/maps/@{{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}},15z"
-                              target="_blank">
-                              {{currentLocation.coords.latitude}},{{ currentLocation.coords.longitude}}
-                        </a>
+            <div *ngIf="positionError">
+                  <div class="alert alert-secondary" >
+                        Your position could not be detected. <small><i>({{ positionError.message }})</i></small>
+                  </div>
+                  <p>Stations near you can't be discovered, but you can chose one from the popular locations below.</p>
+            </div>
+            <div *ngIf="!(positionAcquired || positionError) ">
+                  <div class="alert alert-primary">Please allow the browser to access your location info!</div>
+                  <p>Detecting your position...</p>
+            </div>
+            <div *ngIf="positionAcquired">
+                  <div *ngIf="availableStops">
+                        <h4>Stations near you:</h4>
+                        <ul>
+                              <li *ngFor="let stop of availableStops">                        
+                                    <a (click)="collapseNav()" class="stop {{stop.stopColorType}}" routerLink="/timetable/{{stop.id}}">
+                                          <span *ngIf="appState.selectedStop['id'] === stop.id">&raquo;</span>
+                                          {{ stop.name}}
+                                          <span *ngIf="appState.selectedStop['id'] === stop.id">&laquo;</span>
+                                    </a>
+                              </li>
+                        </ul>
+                  </div>
+                  <div *ngIf="!availableStops">
+                        <p>Discovering stations</p>
+                        <div class="alert alert-secondary" *ngIf="false">
+                              <span *ngIf="false">No station can be found around here. Move closer to the city!</span>
+                              <span *ngIf="false">Unable to load the station list.</span>
+                        </div>
                   </div>
             </div>
-            <div>
-                  <h4>Stations near you:</h4>
-                  <ul>
-                        <li *ngFor="let stop of availableStops">                        
-                              <a (click)="collapseNav()" class="stop {{stop.stopColorType}}" routerLink="/timetable/{{stop.id}}">
-                                    <span *ngIf="appState.selectedStop['id'] === stop.id">&raquo;</span>
-                                    {{ stop.name}}
-                                    <span *ngIf="appState.selectedStop['id'] === stop.id">&laquo;</span>
-                              </a>
-                        </li>
-                  </ul>
-            </div>
-            <div>
+            <div *ngIf="positionAcquired || positionError">
                   <h4>Popular locations:</h4>
                   <ul>
                         <li>
-                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F01017', type: 'BUS', name: 'Astoria'})">Astoria</a>
+                              <a class="stop location" href="/location/47.5106624/19.0550335">Westend</a>
                         </li>
                         <li>
-                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F00667', type: 'BUS', name: 'Aquincum'})">Aquincum</a>
+                              <a class="stop location" href="/location/47.4943933/19.0593575">Astoria</a>
                         </li>
                         <li>
-                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_062607', type: 'BUS', name: 'Infopark'})">Infopark</a>
+                              <a class="stop location" href="/location/47.4740142/19.0480375">Allee</a>
+                        </li>
+                        <li>
+                              <a class="stop location" href="/location/47.49037/19.02356">MOM Park</a>
+                        </li>
+                        <li>
+                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F02439', type: 'BUS', name: 'Thomán István utca'})">Thomán István utca</a>
+                        </li>
+                        <li>
+                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F02454', type: 'BUS', name: 'Csillebérc'})">Csillebérc</a>
+                        </li>
+                        <li>
+                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F04816', type: 'BUS', name: 'Diósd, Kölcsey F. u.'})">Diósd, Kölcsey Ferenc utca</a>
+                        </li>
+                        <li>
+                              <a (click)="collapseNav()" class="stop TRAM" href="#" (click)="selectStop({id: 'BKK_F02101', type: 'TRAM', name: 'Farkasréti temető'})">Farkasréti temető</a>
+                        </li>
+                        <li>
+                              <a (click)="collapseNav()" class="stop TRAM" href="#" (click)="selectStop({id: 'BKK_F01596', type: 'TRAM', name: 'Új Köztemető és Börtön'})">Új Köztemető</a>
                         </li>
                   </ul>
             </div>

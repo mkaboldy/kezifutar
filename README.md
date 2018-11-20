@@ -31,18 +31,19 @@ your-folder/config> $env:NODE_ENV="your-env"
 vi your-folder/config/your-env.js
 ```
 
-### run the server:
+### run the server with the compiled client:
 
 ```
 your-folder> npm install -g nodemon
 your-folder> nodemon index.js
 ```
+open your browser https://<your-IP>:<your-port>
 
-### clone and build the Angular client:
+### build and run the Angular client only:
 
 ```
 your-folder/angular> npm update
 your-folder/angular> ng serve --host <your-ip> --ssl
-open your browser https://<your-IP>:<your-port>
 ```
+open your browser https://<your-IP>:4200
 

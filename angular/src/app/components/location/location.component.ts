@@ -12,7 +12,9 @@ import { GeolocationService } from '../../services/geolocation.service';
 export class LocationComponent implements OnInit {
 
   availableStops;
-  currentLocation: Position;
+  positionAcquired: boolean;
+  positionError: PositionError;
+  loadError;
 
   constructor(
     protected  appState: AppstateService,
@@ -30,11 +32,15 @@ export class LocationComponent implements OnInit {
   }
 
   loadStops(lat: number, lon: number) {
-    const data = this.bkkService.getStopsForLocation(lat, lon)
-      .subscribe( (stopsForLocation) => {
+    const data = this.bkkService.getStopsForLocation(lat, lon).subscribe(
+      (stopsForLocation) => {
         this.setAvailableStops(stopsForLocation);
         data.unsubscribe();
-    });
+      },
+      (error) => {
+        this.loadError = error;
+      }
+    );
   }
 
   selectStop(stop: Object) {
@@ -54,16 +60,16 @@ export class LocationComponent implements OnInit {
     const paramLon = parseFloat(this.route.snapshot.paramMap.get('lon'));
 
     if (paramLat && paramLon) {
+      this.positionAcquired = true;
       this.loadStops(paramLat, paramLon);
     } else {
       const locationSubscription = this.geolocationServcice.getLocation().subscribe(
         (position: Position) => {
-          if (this.currentLocation !== position) {
-            this.currentLocation = position;
-            this.loadStops(position.coords.latitude, position.coords.longitude);
-          }
+          this.positionAcquired = true;
+          this.loadStops(position.coords.latitude, position.coords.longitude);
         },
         (error: PositionError) => {
+          this.positionError = error;
           console.log(error);
         },
         () => {

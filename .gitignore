@@ -1,4 +1,5 @@
 /node_modules
 /sslcert
 /.vscode
-config/hsdev5.json
+config/hsdev5.js
+config/hslt1.js

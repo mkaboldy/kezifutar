@@ -1,4 +1,22 @@
 @font-face {
+    font-family: 'led_matrixregular';
+    src: url('led-matrix-webfont.woff2') format('woff2'),
+         url('led-matrix-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'led_matrix2regular';
+    src: url('led-matrix2-webfont.woff2') format('woff2'),
+         url('led-matrix2-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
     font-family: 'dot_matrixregular';
     src: url('dot-matrix_14317-webfont.woff2') format('woff2'),
          url('dot-matrix_14317-webfont.woff') format('woff');

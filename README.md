@@ -7,8 +7,8 @@ WIP
 
 ### prerequisites:
 
-install git https://tortoisegit.org/download/
-install nodejs https://nodejs.org/en/download/
+- install git https://tortoisegit.org/download/
+- install nodejs https://nodejs.org/en/download/
 
 ### clone and build the server:
 
@@ -19,13 +19,13 @@ your-folder> npm update
 
 ### configure your local environment:
 
-- define an enviromnet var:
+define an enviromnet var:
 
 ```
 your-folder/config> $env:NODE_ENV="your-env"
 ```
 
-- create a config file based on your-folder/config/example.js 
+create a config file based on your-folder/config/example.js 
 
 ```
 vi your-folder/config/your-env.js
@@ -37,13 +37,16 @@ vi your-folder/config/your-env.js
 your-folder> npm install -g nodemon
 your-folder> nodemon index.js
 ```
-open your browser https://<your-IP>:<your-port>
+open your browser https://your-IP:<your-port
 
 ### build and run the Angular client only:
 
 ```
 your-folder/angular> npm update
-your-folder/angular> ng serve --host <your-ip> --ssl
+your-folder/angular> ng serve --host your-ip --ssl
 ```
-open your browser https://<your-IP>:4200
+open your browser https://your-IP:4200
 
+## more doc
+
+https://bkkfutar.docs.apiary.io/#

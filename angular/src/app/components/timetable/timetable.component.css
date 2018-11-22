@@ -3,14 +3,18 @@
 }
 
 .timetable td {
-    font-family: dot_matrixregular;
+    font-family: led_matrix2regular;
     color : orange; 
-    font-size: 1.2rem;
+    font-size: 18px;/*1.2rem*/;
+    letter-spacing: 1px;
+}
+
+.timetable th, .timetable td {
+    vertical-align: top;
 }
 
 .timetable .line, .timetable .departure {
     text-align: right;
-    vertical-align: top;
 }
 
 .timetable .line {padding-right : 10px;}

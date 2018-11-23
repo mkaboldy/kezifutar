@@ -1,0 +1,85 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main.23d29dd9ce6006a4e226.js",
+        "/polyfills.f6ae3e8b63939c618130.js",
+        "/runtime.ec2944dd8b20ec099bf3.js",
+        "/styles.14faf021788bf4bc4bc8.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/fonts/fonts.css",
+        "/assets/fonts/led-matrix2-webfont.woff",
+        "/assets/fonts/led-matrix2-webfont.woff2",
+        "/assets/fonts/license.txt",
+        "/assets/fonts/readme.txt",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/images/logo.png",
+        "/assets/robots.txt"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/fonts/fonts.css": "cc415c164ac807e0baf74e7c18ac60c8e0302aaa",
+    "/assets/fonts/led-matrix2-webfont.woff": "95ab979b3800f41f52d62edfd0b15f5f749eecbd",
+    "/assets/fonts/led-matrix2-webfont.woff2": "4b6b2649e39612ce775fceba840f036e8ddacea2",
+    "/assets/fonts/license.txt": "71763465fee29e31d62013eb985f6ef72ab9e025",
+    "/assets/fonts/readme.txt": "55dfffc300b46902ee42c7f95eadb55da2daaee2",
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/images/logo.png": "70ffe6371cfa3dcc36e1e1cdd83c987f21f30fb8",
+    "/assets/robots.txt": "c30d7a8135f1f154eb9f15c608e1709165648991",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "214ceed666fd0cf9847726cb3a9fc208c1bf0715",
+    "/main.23d29dd9ce6006a4e226.js": "a9326e3e8cb9587c8bed697fb31f0c0ceb6d397d",
+    "/polyfills.f6ae3e8b63939c618130.js": "edc0e79fc6315db4d76b2e7e56702677a06e24c1",
+    "/runtime.ec2944dd8b20ec099bf3.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
+    "/styles.14faf021788bf4bc4bc8.css": "0aad47fca8e3c6e96fcc1dee3328bf8931cee5df"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

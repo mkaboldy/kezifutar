@@ -70,7 +70,7 @@ export class LocationComponent implements OnInit {
         },
         (error: PositionError) => {
           this.positionError = error;
-          console.log(error);
+          console.error(error)
         },
         () => {
           locationSubscription.unsubscribe();

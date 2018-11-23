@@ -14,6 +14,9 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import { CommonSpinnerComponent } from './components/common/spinner/spinner.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/location', pathMatch: 'full'},
@@ -33,7 +36,8 @@ const appRoutes: Routes = [
     FooterComponent,
     LocationComponent,
     SettingsComponent,
-    AboutComponent
+    AboutComponent,
+    CommonSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes
     ),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AppstateService],
   bootstrap: [AppComponent]

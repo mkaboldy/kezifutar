@@ -1,14 +1,14 @@
 <div class="container location">
       <div class="jumbotron">
+            <div *ngIf="!(positionAcquired || positionError) ">
+                  <div class="alert alert-primary">Please allow the browser to access your location info!</div>
+                  <app-common-spinner [text]="'Detecting your position...'"></app-common-spinner>
+            </div>
             <div *ngIf="positionError">
                   <div class="alert alert-secondary" >
                         Your position could not be detected. <small><i>({{ positionError.message }})</i></small>
                   </div>
                   <p>Stations near you can't be discovered, but you can chose one from the popular locations below.</p>
-            </div>
-            <div *ngIf="!(positionAcquired || positionError) ">
-                  <div class="alert alert-primary">Please allow the browser to access your location info!</div>
-                  <p>Detecting your position...</p>
             </div>
             <div *ngIf="positionAcquired">
                   <div *ngIf="availableStops">
@@ -24,7 +24,7 @@
                         </ul>
                   </div>
                   <div *ngIf="!availableStops">
-                        <p>Discovering stations</p>
+                        <app-common-spinner [text]="'Discovering the area'"></app-common-spinner>
                         <div class="alert alert-secondary" *ngIf="false">
                               <span *ngIf="false">No station can be found around here. Move closer to the city!</span>
                               <span *ngIf="false">Unable to load the station list.</span>

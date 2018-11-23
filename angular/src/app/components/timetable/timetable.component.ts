@@ -48,7 +48,7 @@ export class TimetableComponent implements OnInit {
         }
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       },
       () => {
         this._refreshSubscription.unsubscribe();
@@ -63,7 +63,7 @@ export class TimetableComponent implements OnInit {
           this.setTimeTable(arrivalsAndDeparturesForStop);
         },
         (error) => {
-          console.log(error);
+          console.error(error);
         },
         () => {
           subscription.unsubscribe();

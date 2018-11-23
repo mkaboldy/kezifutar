@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mkaboldy/kezifutar.git"
@@ -20,6 +20,7 @@
   "dependencies": {
     "@angular/cli": "^7.0.6",
     "@angular/compiler-cli": "^7.0.4",
+    "compression": "^1.7.3",
     "cors": "^2.8.5",
     "express": "^4.16.4"
   },

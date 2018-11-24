@@ -12,7 +12,7 @@
         "/main.23d29dd9ce6006a4e226.js",
         "/polyfills.f6ae3e8b63939c618130.js",
         "/runtime.ec2944dd8b20ec099bf3.js",
-        "/styles.14faf021788bf4bc4bc8.css"
+        "/styles.126dbe9dd57bc1ef088d.css"
       ],
       "patterns": []
     },
@@ -34,17 +34,16 @@
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
         "/assets/icons/icon-96x96.png",
-        "/assets/images/logo.png",
-        "/assets/robots.txt"
+        "/assets/images/logo.png"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/assets/fonts/fonts.css": "cc415c164ac807e0baf74e7c18ac60c8e0302aaa",
-    "/assets/fonts/led-matrix2-webfont.woff": "95ab979b3800f41f52d62edfd0b15f5f749eecbd",
-    "/assets/fonts/led-matrix2-webfont.woff2": "4b6b2649e39612ce775fceba840f036e8ddacea2",
+    "/assets/fonts/fonts.css": "9195c7ad437b27c963599c1e5d453ff39e0eae76",
+    "/assets/fonts/led-matrix2-webfont.woff": "9af0632249b1c206b5f38d7cf7514d8fa09c28e4",
+    "/assets/fonts/led-matrix2-webfont.woff2": "3f12ed091723927437b396552f49c0f840fa39b1",
     "/assets/fonts/license.txt": "71763465fee29e31d62013eb985f6ef72ab9e025",
     "/assets/fonts/readme.txt": "55dfffc300b46902ee42c7f95eadb55da2daaee2",
     "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
@@ -56,13 +55,12 @@
     "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/assets/images/logo.png": "70ffe6371cfa3dcc36e1e1cdd83c987f21f30fb8",
-    "/assets/robots.txt": "c30d7a8135f1f154eb9f15c608e1709165648991",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "214ceed666fd0cf9847726cb3a9fc208c1bf0715",
+    "/index.html": "ea332a8e0b58376537b1a13a236e72d6ca9935d7",
     "/main.23d29dd9ce6006a4e226.js": "a9326e3e8cb9587c8bed697fb31f0c0ceb6d397d",
     "/polyfills.f6ae3e8b63939c618130.js": "edc0e79fc6315db4d76b2e7e56702677a06e24c1",
     "/runtime.ec2944dd8b20ec099bf3.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
-    "/styles.14faf021788bf4bc4bc8.css": "0aad47fca8e3c6e96fcc1dee3328bf8931cee5df"
+    "/styles.126dbe9dd57bc1ef088d.css": "0fef319de4e255b14c7f81b97015d1ef267f39da"
   },
   "navigationUrls": [
     {

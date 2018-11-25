@@ -269,6 +269,9 @@ MIT
 @angular/common
 MIT
 
+idlejs
+MIT
+
 @angular/platform-browser
 MIT
 

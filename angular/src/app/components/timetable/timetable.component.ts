@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BkkService  } from '../../services/bkk.service';
 import { AppstateService  } from '../../services/appstate.service';
 import { interval, Subscription } from 'rxjs';
+import { Idle } from 'idlejs/dist';
 
 @Component({
   selector: 'app-timetable',
@@ -14,6 +15,10 @@ export class TimetableComponent implements OnInit {
 
   private _refreshSubscription: Subscription = new Subscription();
   public timeTable;
+  public userIsIdle = false;
+  private idle = new Idle();
+  public userTimeoutMins = 2;
+  private refreshFrequencySecs = 15;
 
   constructor(
     private bkkService: BkkService,
@@ -25,27 +30,11 @@ export class TimetableComponent implements OnInit {
   renderTimeTable(stop) {
     this._refreshSubscription.unsubscribe();
     this.loadTimetable(stop['id']);
-    const refreshTimer = interval(15000);
-    const blinkTimer = interval(500);
-    let blink = false;
-    const blinkSubscription = blinkTimer.subscribe(n => {
-      blink = !blink;
-      Array.from(document.querySelectorAll('.blink')).forEach( element => {
-        element.setAttribute('style', 'opacity: ' + (blink ? '1' : '0'));
-      });
-    });
+    const refreshTimer = interval(this.refreshFrequencySecs * 1000);
 
     this._refreshSubscription = refreshTimer.subscribe(
       (n) => {
-        if (n < 5 ) {
-          this.loadTimetable(stop['id']);
-        } else {
-          this._refreshSubscription.unsubscribe();
-          Array.from(document.querySelectorAll('.blink')).forEach( element => {
-            element.removeAttribute('style');
-          });
-          blinkSubscription.unsubscribe();
-        }
+        this.loadTimetable(stop['id']);
       },
       (error) => {
         console.error(error);
@@ -72,6 +61,7 @@ export class TimetableComponent implements OnInit {
     }
   }
 
+  /* TODO refactor this */
   private getDepartureTime(stopTime) {
     let departureTime = new Date();
     if (stopTime.predictedDepartureTime) {
@@ -84,6 +74,7 @@ export class TimetableComponent implements OnInit {
     return departureTime;
   }
 
+  /* TODO refactor this */
   private getDepartureMinutes(departureTime: Date, now?: Date): Number {
     const diff = departureTime.getTime() - now.getTime();
     return Math.ceil(diff / (60 * 1000));
@@ -99,11 +90,16 @@ export class TimetableComponent implements OnInit {
       const departureTime = this.getDepartureTime(stopTime);
       const departureMinutes = this.getDepartureMinutes(departureTime, new Date());
       oneLine['departure'] =  departureMinutes ? departureMinutes + '\'' : '';
-      oneLine['rowclass'] = (departureMinutes < 1 ? 'blink' : '');
       timeTable.push(oneLine);
     }
     this.timeTable = timeTable;
     this.appState.selectedStop = arrivalsAndDeparturesForStop.data.references.stops[this.appState.selectedStop['id']];
+  }
+
+  resumeClick() {
+    this.renderTimeTable( this.appState.selectedStop );
+    this.userIsIdle = false;
+    this.idle.restart();
   }
 
   ngOnInit() {
@@ -114,6 +110,14 @@ export class TimetableComponent implements OnInit {
     } else {
       this.renderTimeTable(this.appState.selectedStop);
     }
+
+    this.idle.whenNotInteractive()
+      .within(this.userTimeoutMins)
+      .do(() => {
+        this.userIsIdle = true;
+        this._refreshSubscription.unsubscribe();
+      })
+      .start();
   }
 
   ngOnDestroy() {

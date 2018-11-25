@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let stopTime of timeTable" class="{{ (stopTime['rowclass']) }}">
+        <tr *ngFor="let stopTime of timeTable" [ngClass]="{'blink': !(userIsIdle || stopTime.departure)}">
           <td class="line">{{ stopTime['service'] }}</td>
           <td class="stopHeadSign">{{ stopTime['destination'] }}</td>
           <td class="departure">{{ stopTime['departure'] }}</td>
@@ -19,3 +19,14 @@
     </table>
   </div>
 </div>
+<div id="suspended" *ngIf="userIsIdle">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="modal-body text-center">
+          <p>Connection suspended after {{ userTimeoutMins }} minutes of inactivity to save your bandwidth.</p>
+          <p><button type="button" class="btn btn-primary" (click)="resumeClick()">Resume</button></p>
+        </div>
+      </div>
+    </div>
+  </div>

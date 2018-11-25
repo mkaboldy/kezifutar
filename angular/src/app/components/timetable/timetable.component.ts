@@ -120,6 +120,7 @@ export class TimetableComponent implements OnInit {
       .start();
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     this._refreshSubscription.unsubscribe();
   }

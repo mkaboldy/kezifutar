@@ -6,7 +6,8 @@
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/favicon.ico",
+          "/favicon-32x32.png",
+          "/favicon-16x16.png",
           "/index.html",
           "/*.css",
           "/*.js"

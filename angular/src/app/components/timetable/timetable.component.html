@@ -1,22 +1,35 @@
 <div class="container timetable">
   <div class="jumbotron">
-    <h4 class="stop {{ appState.selectedStop['stopColorType']}}">{{ appState.selectedStop['name'] }}</h4>
-    <table width="100%">
-      <thead>
-        <tr>
-          <th class="line">Service</th>
-          <th class="stopHeadSign">Destination</th>
-          <th class="departure">Departure <small>(min)</small></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let stopTime of timeTable" [ngClass]="{'blink': !(userIsIdle || stopTime.departure)}">
-          <td class="line">{{ stopTime['service'] }}</td>
-          <td class="stopHeadSign">{{ stopTime['destination'] }}</td>
-          <td class="departure">{{ stopTime['departure'] }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="timeTable">
+      <h4 class="stop {{ appState.selectedStop['stopColorType']}}">{{ appState.selectedStop['name'] }}</h4>
+      <table width="100%">
+        <thead>
+          <tr>
+            <th class="line">Line</th>
+            <th class="stopHeadSign">Destination</th>
+            <th class="departure">Departure <small>(min)</small></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="timeTable.length">
+          <tr *ngFor="let stopTime of timeTable" [ngClass]="{'blink': !(userIsIdle || stopTime.departure)}">
+            <td class="line">{{ stopTime['service'] }}</td>
+            <td class="stopHeadSign">{{ stopTime['destination'] }}</td>
+            <td class="departure">{{ stopTime['departure'] }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-secondary" *ngIf="!timeTable.length">
+        No departure from this station in the next 30 mins.
+      </div>            
+    </div>
+    <div *ngIf="loadError">
+      <div class="text-center">
+        <div class="alert alert-secondary" role="alert">
+          <i class="fa fa-frown-o fa-2x" style="font-size: 20px; color: orange; margin-right: 5px;"></i> 
+          Unable to load the departures.
+        </div>
+      </div>                        
+    </div>
   </div>
 </div>
 <div id="suspended" *ngIf="userIsIdle">

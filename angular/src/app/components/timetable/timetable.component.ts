@@ -19,6 +19,7 @@ export class TimetableComponent implements OnInit {
   private idle = new Idle();
   public userTimeoutMins = 2;
   private refreshFrequencySecs = 15;
+  public loadError = false;
 
   constructor(
     private bkkService: BkkService,
@@ -49,9 +50,11 @@ export class TimetableComponent implements OnInit {
   loadTimetable(stopId?: string) {
     if (stopId) {
       const subscription = this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
+          this.loadError = false;
           this.setTimeTable(arrivalsAndDeparturesForStop);
         },
         (error) => {
+          this.loadError = true;
           console.error(error);
         },
         () => {

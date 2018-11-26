@@ -27,7 +27,9 @@ export class LocationComponent implements OnInit {
   setAvailableStops(stopsForLocation) {
     this.availableStops = [];
     for (const stop of stopsForLocation.data.list) {
-      this.availableStops.push(stop);
+      if (stop['routeIds'].length) {
+        this.availableStops.push(stop);
+      }
     }
   }
 
@@ -38,6 +40,7 @@ export class LocationComponent implements OnInit {
         data.unsubscribe();
       },
       (error) => {
+        console.log(error);
         this.loadError = error;
       }
     );
@@ -70,7 +73,7 @@ export class LocationComponent implements OnInit {
         },
         (error: PositionError) => {
           this.positionError = error;
-          console.error(error)
+          console.error(error);
         },
         () => {
           locationSubscription.unsubscribe();

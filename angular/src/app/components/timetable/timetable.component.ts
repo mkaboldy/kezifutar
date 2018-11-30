@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BkkService  } from '../../services/bkk.service';
 import { AppstateService  } from '../../services/appstate.service';
 import { interval, Subscription } from 'rxjs';
@@ -14,24 +14,25 @@ import { Idle } from 'idlejs/dist';
 export class TimetableComponent implements OnInit {
 
   private _refreshSubscription: Subscription = new Subscription();
+  private _idle = new Idle();
+  private _refreshFrequencySecs = 15;
+  public stopName;
+  public stopColorTypes;
   public timeTable;
   public userIsIdle = false;
-  private idle = new Idle();
   public userTimeoutMins = 2;
-  private refreshFrequencySecs = 15;
   public loadError = false;
 
   constructor(
-    private bkkService: BkkService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private _bkkService: BkkService,
+    private _route: ActivatedRoute,
     public appState: AppstateService) {
   }
 
   renderTimeTable(stop) {
     this._refreshSubscription.unsubscribe();
     this.loadTimetable(stop['id']);
-    const refreshTimer = interval(this.refreshFrequencySecs * 1000);
+    const refreshTimer = interval(this._refreshFrequencySecs * 1000);
 
     this._refreshSubscription = refreshTimer.subscribe(
       (n) => {
@@ -49,7 +50,7 @@ export class TimetableComponent implements OnInit {
 
   loadTimetable(stopId?: string) {
     if (stopId) {
-      const subscription = this.bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
+      const subscription = this._bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
           this.loadError = false;
           this.setTimeTable(arrivalsAndDeparturesForStop);
         },
@@ -84,37 +85,55 @@ export class TimetableComponent implements OnInit {
   }
 
   private setTimeTable(arrivalsAndDeparturesForStop) {
-    const timeTable = new Array();
-    for (const stopTime of arrivalsAndDeparturesForStop.data.entry.stopTimes) {
+    // merge then sort timetables
+    let stopTimes = [];
+    let trips = new Object();
+    let routes = new Object();
+    let stops = new Object();
+    arrivalsAndDeparturesForStop.forEach(element => {
+      stopTimes = stopTimes.concat(element.data.entry.stopTimes);
+      trips =  {...trips, ...element.data.references.trips};
+      routes = {...routes, ...element.data.references.routes};
+      stops = {...stops, ...element.data.references.stops};
+    });
+    stopTimes.sort( (a, b) => a.departureTime - b.departureTime);
+    this.timeTable = [];
+    for (const stopTime of stopTimes) {
       const oneLine = new Object();
-      const routeId = arrivalsAndDeparturesForStop.data.references.trips[stopTime.tripId].routeId;
-      oneLine['service'] = arrivalsAndDeparturesForStop.data.references.routes[routeId].shortName;
+      const routeId = trips[stopTime.tripId].routeId;
+      oneLine['service'] = routes[routeId].shortName;
       oneLine['destination'] = stopTime.stopHeadsign;
       const departureTime = this.getDepartureTime(stopTime);
       const departureMinutes = this.getDepartureMinutes(departureTime, new Date());
       oneLine['departure'] =  departureMinutes ? departureMinutes + '\'' : '';
-      timeTable.push(oneLine);
+      this.timeTable.push(oneLine);
     }
-    this.timeTable = timeTable;
-    this.appState.selectedStop = arrivalsAndDeparturesForStop.data.references.stops[this.appState.selectedStop['id']];
+    const classes = [];
+    for (const stop in stops) {
+      if (stops.hasOwnProperty(stop)) {
+        this.stopName = stops[stop].name;
+        classes.push(stops[stop].stopColorType);
+      }
+    }
+    this.stopColorTypes = classes.join(' ');
   }
 
   resumeClick() {
     this.renderTimeTable( this.appState.selectedStop );
     this.userIsIdle = false;
-    this.idle.restart();
+    this._idle.restart();
   }
 
   ngOnInit() {
-    const paramStopId = this.route.snapshot.paramMap.get('stopId');
+    const paramStopId = this._route.snapshot.paramMap.get('stopId');
+
     if (paramStopId) {
       this.appState.selectedStop = { id : paramStopId };
-      this.renderTimeTable( this.appState.selectedStop );
-    } else {
-      this.renderTimeTable(this.appState.selectedStop);
     }
 
-    this.idle.whenNotInteractive()
+    this.renderTimeTable(this.appState.selectedStop);
+
+    this._idle.whenNotInteractive()
       .within(this.userTimeoutMins)
       .do(() => {
         this.userIsIdle = true;

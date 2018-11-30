@@ -13,7 +13,8 @@ export class BkkService {
   constructor(private http: HttpClient) { }
 
   getArrivalsAndDeparturesForStop(stopId: string) {
-    const query = this.apiRoot + '/departures/' + stopId;
+    // const query = this.apiRoot + '/departures/' + stopId; /** legacy api */
+    const query = this.apiRoot + '/departuresforstops/' + stopId;
     return this.http.get(query);
   }
 

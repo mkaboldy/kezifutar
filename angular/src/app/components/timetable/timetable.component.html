@@ -1,7 +1,7 @@
 <div class="container timetable">
   <div class="jumbotron">
     <div *ngIf="timeTable">
-      <h4 class="stop {{ appState.selectedStop['stopColorType']}}">{{ appState.selectedStop['name'] }}</h4>
+      <h4 class="stop {{stopColorTypes}}">{{ stopName }}</h4>
       <table width="100%">
         <thead>
           <tr>

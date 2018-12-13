@@ -1,13 +1,50 @@
-const http = require('http');
 const util = require('util');
+const axios = require('axios');
 const apiRoot = 'http://futar.bkk.hu/api/query/v1/ws/otp/api/where';
 
 module.exports = (router) => {
 
+    // TODO: /stops/lat,lon
     router.get('/stops/:lat/:lon', (req,res)=>{        
+        getStopsForLatLon(req.params.lat,req.params.lon)
+        .then(response =>{
+            res.json(response.data);
+        })
+        .catch(reason => {
+            console.log(reason);
+        });
+    });
+
+    router.get('/departures/:stopId', (req,res)=>{
+        getDepartureForStop(req.params.stopId)
+        .then(response => {
+            res.json(response.data);
+        })
+        .catch(reason => {
+            console.log(reason);
+        });
+    });
+
+    router.get('/departuresforstops/:stopIds', (req,res) => {
+        stopIds = req.params.stopIds.split(',');
+        departures = [];
+        promises = [];
+        stopIds.forEach(stopId => {
+            promises.push(getDepartureForStop(stopId).then( response => {
+                departures.push(response.data);
+            }));
+        });
+        Promise.all(promises)
+        .then( x =>{
+            res.json(departures);    
+        })
+        .catch(reason => {
+            console.log(reason);
+        });
+    });
+
+    getStopsForLatLon = (lat,lon) => {
         const endPoint = 'stops-for-location.json';
-        const lat = req.params.lat;
-        const lon = req.params.lon;
         const discoveryRadius = 0.005;
         const latSpan = discoveryRadius;
         const lonSpan = discoveryRadius;
@@ -19,41 +56,20 @@ module.exports = (router) => {
             util.format('latSpan=%s',latSpan),
             util.format('lonSpan=%s',lonSpan)
         );
-        http.get(request, (resp) => {
-            let data = '';
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-            resp.on('end', () => {
-                res.json(JSON.parse(data));
-            });          
-        }).on("error", (err) => {
-            res.json(err)
-        });                
-    });
+        return axios.get(request);
+    }
 
-    router.get('/departures/:stopId', (req,res)=>{
+    getDepartureForStop = stopId => {
         const endPoint = 'arrivals-and-departures-for-stop.json';
         const request = util.format('%s/%s?%s&%s&%s&%s', 
             apiRoot, 
             endPoint,
             util.format('includeReferences=%s','agencies,routes,trips,stops'),
-            util.format('stopId=%s',req.params.stopId),
+            util.format('stopId=%s',stopId),
             util.format('minutesBefore=%s',1),
             util.format('minutesAfter=%s',30)
         );
-        http.get(request, (resp) => {
-            let data = '';
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-            resp.on('end', () => {
-                res.json(JSON.parse(data));
-            });          
-        }).on("error", (err) => {
-            res.json(err)
-        });                
-    });
-
+        return axios.get(request);
+    }
     return router;
 }

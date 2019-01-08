@@ -96,7 +96,6 @@ export class TimetableComponent implements OnInit {
       routes = {...routes, ...element.data.references.routes};
       stops = {...stops, ...element.data.references.stops};
     });
-    stopTimes.sort( (a, b) => a.departureTime - b.departureTime);
     this.timeTable = [];
     for (const stopTime of stopTimes) {
       const oneLine = new Object();
@@ -108,6 +107,7 @@ export class TimetableComponent implements OnInit {
       oneLine['departure'] =  departureMinutes ? departureMinutes + '\'' : '';
       this.timeTable.push(oneLine);
     }
+    this.timeTable.sort( (a, b) => a['departure'] - b['departure']);
     const classes = [];
     for (const stop in stops) {
       if (stops.hasOwnProperty(stop)) {

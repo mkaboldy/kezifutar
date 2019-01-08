@@ -57,7 +57,7 @@ module.exports = (router) => {
             util.format('lonSpan=%s',lonSpan)
         );
         return axios.get(request);
-    }
+    };
 
     getDepartureForStop = stopId => {
         const endPoint = 'arrivals-and-departures-for-stop.json';
@@ -70,6 +70,6 @@ module.exports = (router) => {
             util.format('minutesAfter=%s',30)
         );
         return axios.get(request);
-    }
+    };
     return router;
-}
+};

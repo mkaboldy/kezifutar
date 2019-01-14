@@ -1,0 +1,51 @@
+{
+  "NAVBAR" : {
+    "DEPARTURES" : "Departures",
+    "LOCATION" : "Location",
+    "SETTINGS" : "Settings",
+    "ABOUT" : "About"
+  },
+  "DEPARTURES" : {
+    "LINE" : "Line",
+    "DESTINATION" : "Destination",
+    "DEPARTURE" : "Departure",
+    "MINS" : "mins",
+    "NO_DEPARTURE" : "No departure from this station in the next {{ mins }} mins.",
+    "UNABLE_TO_LOAD_DEPARURES" : "Unable to load the departures.",
+    "REFRESH_SUSPENDED" : "Connection suspended after {{ mins }} minutes of inactivity to save your bandwidth.",
+    "RESUME" : "Resume"
+  },
+  "LOCATION" : {
+    "PLS_ALLOW_ACCESS" : "Please allow the browser to access your location info!",
+    "DETECTING" : "Detecting your position...",
+    "CANNOT_DETECT" : "Your position could not be detected.",
+    "CHOSE_LOCATION" : "Stations near you can't be discovered, but you can chose one from the popular locations below.",
+    "STATIONS_NEAR" : "Stations near you:",
+    "NO_STATION_FOUND" : "No station can be found around here. Move closer to the city!",
+    "DISCOVERING" : "Discovering the area",
+    "UNABLE_TO_LOAD_STATIONS" : "Unable to load the station list.",
+    "POPULAR_LOCATIONS" : "Popular locations:"
+  },
+  "SETTINGS" : {
+    "TITLE" : "Settings",
+    "COMINGSOON" : "Coming soon..."
+  },
+  "ABOUT" : {
+    "TITLE": "About this app",
+    "INTRO" : "This app has been built to demonstrate the architecture of an Angular 2 browser app. The mission of the app is to provide departure information for public transport services in Budapest metropolitan area.",
+    "SOURCE" : "The full source code of the app is available on github: <a href=\"https://github.com/mkaboldy/kezifutar\" target=\"_blank\">https://github.com/mkaboldy/kezifutar</a>. Feel free to clone, fork or report issues.",
+    "PRIVACY" : {
+      "SUBTITLE" : "Privacy",
+      "BODY" : "We don't store any information about you."
+    },
+    "CREDITS" : {
+      "SUBTITLE" : "Credits",
+      "ROUTE_PLANNER" : "Route planner API provided by Budapest Transport Authority (BKK).",
+      "LED_MATRIX" : "Led Matrix fonts designed by Dániel Balogh"
+    }
+  },
+  "FOOTER" : {
+    "MUTED" : "&copy; 2019 Miklos Kaboldy, MIT license.",
+    "TEXT" : "<a href=\"https://github.com/mkaboldy/kezifutar\" target=\"blank\">Full source here.</a>"
+  }
+}

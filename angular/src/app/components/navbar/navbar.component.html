@@ -6,23 +6,23 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a (click)="collapseNav()" class="nav-link" routerLink="/timetable/{{ appState.selectedStop['id'] }}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}" [ngClass]="{'disabled' : (!appState.selectedStop['id'])}">
-          Timetable
+        <a (click)="collapseNav()" class="nav-link" routerLink="/departures/{{ appState.selectedStop['id'] }}" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}" [ngClass]="{'disabled' : (!appState.selectedStop['id'])}">
+          {{ 'NAVBAR.DEPARTURES' | translate}}
         </a>
       </li>
       <li class="nav-item">
         <a (click)="collapseNav()" class="nav-link" routerLink="/location" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-          Location
+          {{ 'NAVBAR.LOCATION' | translate}}
         </a>
       </li>
       <li class="nav-item">
         <a (click)="collapseNav()" class="nav-link" routerLink="/settings" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-          Settings
+          {{ 'NAVBAR.SETTINGS' | translate}}
         </a>
       </li>
       <li class="nav-item">
         <a (click)="collapseNav()" class="nav-link" routerLink="/about" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-          About
+          {{ 'NAVBAR.ABOUT' | translate}}
         </a>
       </li>
     </ul>

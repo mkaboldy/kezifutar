@@ -11,7 +11,7 @@ import { GeolocationService } from '../../services/geolocation.service';
 })
 export class LocationComponent implements OnInit {
 
-  availableStops;
+  availableStops: Array<any>;
   positionAcquired: boolean;
   positionError: PositionError;
   loadError;
@@ -22,7 +22,9 @@ export class LocationComponent implements OnInit {
     private geolocationServcice: GeolocationService,
     private router: Router,
     private route: ActivatedRoute,
-    ) { }
+    ) {
+      this.availableStops = [];
+    }
 
   setAvailableStops(stopsForLocation) {
     this.availableStops = [];
@@ -47,7 +49,7 @@ export class LocationComponent implements OnInit {
   }
 
   selectStop(stop: Object) {
-    this.router.navigate(['/timetable/' + stop['id']]);
+    this.router.navigate(['/departures/' + stop['id']]);
     return false;
   }
 

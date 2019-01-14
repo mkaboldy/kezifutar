@@ -1,0 +1,51 @@
+{
+    "NAVBAR" : {
+      "DEPARTURES" : "Indulások",
+      "LOCATION" : "Hely",
+      "SETTINGS" : "Beállítások",
+      "ABOUT" : "Névjegy"
+    },
+    "DEPARTURES" : {
+      "LINE" : "Járat",
+      "DESTINATION" : "Irány",
+      "DEPARTURE" : "Indulás",
+      "MINS" : "perc",
+      "NO_DEPARTURE" : "A következő {{ mins }} percben nem indul innen semmi:(",
+      "UNABLE_TO_LOAD_DEPARURES" : "Nem sikerült a járatok betöltése.",
+      "REFRESH_SUSPENDED" : "Frissítés felfüggesztve {{ mins }} perc tétlenség után.",
+      "RESUME" : "Folytatás"
+    },  
+    "LOCATION" : {
+      "PLS_ALLOW_ACCESS" : "Engedélyezze a böngésző kérését!",
+      "DETECTING" : "Tartózkodási hely megállapítása...",
+      "CANNOT_DETECT" : "Az Ön tartózkodási helye nem állapítható meg.",
+      "CHOSE_LOCATION" : "A közeli megállókat így nem lehet megtalálni. Válasszon az alábbi listából!",
+      "STATIONS_NEAR" : "Megállók a közelben:",
+      "NO_STATION_FOUND" : "A környéken nincs megálló. Menjen közelebb a városhoz:)",
+      "DISCOVERING" : "A környék felderítése...",
+      "UNABLE_TO_LOAD_STATIONS" : "Nem sikerült a megállók betöltése.",
+      "POPULAR_LOCATIONS" : "Népszerű helyek:"
+    },
+    "SETTINGS" : {
+      "TITLE" : "Beállíások",
+      "COMINGSOON" : "Hamarosan..."
+    },  
+    "ABOUT" : {
+      "TITLE": "Kézifutár",
+      "INTRO" : "Az alkalmazás célja, hogy mobileszközökön is megjeleníthetőek legyenek a BKK Futár táblájához hasonló járatinformációk. Hasznos lehet olyan megállók közelében, ahol Futár tábla nincs telepítve, vagy az nem látható, például közeli lakásban, üzlethelyiségben.",
+      "SOURCE" : "Az alkalmazás teljes forráskódja elérhető a következő linken: <a href=\"https://github.com/mkaboldy/kezifutar\" target=\"_blank\">https://github.com/mkaboldy/kezifutar</a>. A forráskód szabadon másolható és továbbfejleszthető.",
+      "PRIVACY" : {
+          "SUBTITLE" : "Adatvédelem",
+          "BODY" : "Az alkalmazás nem kezel, nem tárol és nem továbbít személyes adatokat."
+      },
+      "CREDITS" : {
+          "SUBTITLE" : "Közreműködők",
+          "ROUTE_PLANNER" : "A járatinformációkat a Budapesti Közlekedési Központ nyilvános adatkapcsolati felülete (API) szolgáltatja.",
+          "LED_MATRIX" : "A Led Matrix fontot Balogh Dániel tervezte."
+      }
+    },
+    "FOOTER" : {
+      "MUTED" : "&copy; 2019 Kaboldy Miklós, MIT license.",
+      "TEXT" : "Forráskód <a href=\"https://github.com/mkaboldy/kezifutar\" target=\"blank\">itt</a>."
+    }
+}

@@ -1,21 +1,21 @@
 <div class="container location">
       <div class="jumbotron">
             <div *ngIf="!(positionAcquired || positionError) ">
-                  <div class="alert alert-primary">Please allow the browser to access your location info!</div>
-                  <app-common-spinner [text]="'Detecting your position...'"></app-common-spinner>
+                  <div class="alert alert-primary">{{ 'LOCATION.PLS_ALLOW_ACCESS' | translate}}</div>
+                  <app-common-spinner [text]="'LOCATION.DETECTING' | translate"></app-common-spinner>
             </div>
             <div *ngIf="positionError">
                   <div class="alert alert-secondary" >
-                        Your position could not be detected. <small><i>({{ positionError.message }})</i></small>
+                        {{ 'LOCATION.CANNOT_DETECT' | translate}} <small><i>({{ positionError.message }})</i></small>
                   </div>
-                  <p>Stations near you can't be discovered, but you can chose one from the popular locations below.</p>
+                  <p>{{ 'LOCATION.CHOSE_LOCATION' | translate}}</p>
             </div>
             <div *ngIf="positionAcquired">
                   <div *ngIf="availableStops">
-                        <h4>Stations near you:</h4>
+                        <h4>{{ 'LOCATION.STATIONS_NEAR' | translate}}</h4>
                         <ul>
                               <li *ngFor="let stop of availableStops">                        
-                                    <a (click)="collapseNav()" class="stop {{stop.stopColorType}}" routerLink="/timetable/{{stop.id}}">
+                                    <a (click)="collapseNav()" class="stop {{stop.stopColorType}}" routerLink="/departures/{{stop.id}}">
                                           <span *ngIf="appState.selectedStop['id'] === stop.id">&raquo;</span>
                                           {{ stop.name }}
                                           <span *ngIf="appState.selectedStop['id'] === stop.id">&laquo;</span>
@@ -25,23 +25,23 @@
                   </div>
                   <div *ngIf="!availableStops.length">
                         <div class="alert alert-secondary">
-                              No station can be found around here. Move closer to the city!
+                              {{ 'LOCATION.NO_STATION_FOUND' | translate}}
                         </div>            
                   </div>
                   <div *ngIf="!(availableStops || loadError)">
-                        <app-common-spinner [text]="'Discovering the area'"></app-common-spinner>
+                        <app-common-spinner [text]=" 'LOCATION.DISCOVERING' | translate"></app-common-spinner>
                   </div>
                   <div *ngIf="loadError">
                         <div class="text-center">
                               <div class="alert alert-secondary" role="alert">
                                     <i class="fa fa-frown-o fa-2x" style="font-size: 20px; color: orange; margin-right: 5px;"></i> 
-                                    Unable to load the station list.
+                                    {{ 'LOCATION.UNABLE_TO_LOAD_STATIONS' | translate}}
                               </div>
                         </div>                        
                   </div>
             </div>
             <div *ngIf="positionAcquired || positionError">
-                  <h4>Popular locations:</h4>
+                  <h4>{{ 'LOCATION.POPULAR_LOCATIONS' | translate}}</h4>
                   <ul>
                         <li>
                               <a class="stop location" href="/location/47.5655984/19.0446418">Aquincum</a>

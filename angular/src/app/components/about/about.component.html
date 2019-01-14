@@ -1,14 +1,14 @@
 <div class="container about">
     <div class="jumbotron">
-        <h4 class="page-header">About this app</h4>
-        <p>This app has been built to demonstrate the architecture of an Angular 2 browser app. The mission of the app is to provide departure information for public transport services in Budapest metropolitan area.</p>
-        <p>The full source code of the app is available on github: <a href="https://github.com/mkaboldy/kezifutar" target="_blank">https://github.com/mkaboldy/kezifutar</a>. Feel free to clone, fork or report issues.</p>
-        <h5>Privacy</h5>
-        <p>We don't store any information about you.</p>
-        <h5>Credits</h5>
+        <h4 class="page-header">{{ 'ABOUT.TITLE' | translate}}</h4>
+        <p>{{ 'ABOUT.INTRO' | translate}}</p>
+        <p [innerHTML]="'ABOUT.SOURCE' | translate"></p>
+        <h5>{{ 'ABOUT.PRIVACY.SUBTITLE' | translate}}</h5>
+        <p [innerHTML]="'ABOUT.PRIVACY.BODY' | translate"></p>
+        <h5>{{ 'ABOUT.CREDITS.SUBTITLE' | translate}}</h5>
         <ul>
-            <li>Route planner API provided by Budapest Transport Authority (BKK)</li>
-            <li>Led Matrix fonts designed by Dániel Balogh</li>
+            <li>{{ 'ABOUT.CREDITS.ROUTE_PLANNER' | translate}}</li>
+            <li>{{ 'ABOUT.CREDITS.LED_MATRIX' | translate}}</li>
         </ul>
     </div>
 </div>

@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { AppstateService } from './services/appstate.service';
 
@@ -18,10 +20,14 @@ import { CommonSpinnerComponent } from './components/common/spinner/spinner.comp
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 const appRoutes: Routes = [
   { path: '', redirectTo: '/location', pathMatch: 'full'},
-  { path: 'timetable/:stopId', component: TimetableComponent },
-  { path: 'timetable',  redirectTo: '/location', pathMatch: 'full'},
+  { path: 'departures/:stopId', component: TimetableComponent },
+  { path: 'departures',  redirectTo: '/location', pathMatch: 'full'},
   { path: 'location/:lat/:lon', component: LocationComponent },
   { path: 'settings', component: SettingsComponent},
   { path: 'about', component: AboutComponent},
@@ -49,6 +55,13 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes
     ),
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AppstateService],

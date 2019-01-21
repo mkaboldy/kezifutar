@@ -12,9 +12,10 @@ import { GeolocationService } from '../../services/geolocation.service';
 export class LocationComponent implements OnInit {
 
   availableStops: Array<any>;
+  position: Position;
   positionAcquired: boolean;
   positionError: PositionError;
-  loadError;
+  loadError: boolean;
 
   constructor(
     protected  appState: AppstateService,
@@ -24,6 +25,7 @@ export class LocationComponent implements OnInit {
     private route: ActivatedRoute,
     ) {
       this.availableStops = [];
+      this.loadError = false;
     }
 
   setAvailableStops(stopsForLocation) {
@@ -71,6 +73,7 @@ export class LocationComponent implements OnInit {
       const locationSubscription = this.geolocationServcice.getLocation().subscribe(
         (position: Position) => {
           this.positionAcquired = true;
+          this.position = position;
           this.loadStops(position.coords.latitude, position.coords.longitude);
         },
         (error: PositionError) => {
@@ -80,7 +83,6 @@ export class LocationComponent implements OnInit {
         () => {
           locationSubscription.unsubscribe();
         }
-
       );
     }
   }

@@ -12,7 +12,7 @@
       "MINS" : "perc",
       "NO_DEPARTURE" : "A következő {{ mins }} percben nem indul innen semmi:(",
       "UNABLE_TO_LOAD_DEPARURES" : "Nem sikerült a járatok betöltése.",
-      "REFRESH_SUSPENDED" : "Frissítés felfüggesztve {{ mins }} perc tétlenség után.",
+      "REFRESH_SUSPENDED" : "Frissítés felfüggesztve {{ mins }} perc időtúllépés után.",
       "RESUME" : "Folytatás"
     },  
     "LOCATION" : {

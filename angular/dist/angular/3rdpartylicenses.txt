@@ -272,9 +272,6 @@ MIT
 @angular/common
 MIT
 
-idlejs
-MIT
-
 @angular/platform-browser
 MIT
 
@@ -282,6 +279,9 @@ MIT
 MIT
 
 @ngx-translate/core
+MIT
+
+idlejs
 MIT
 
 @angular/service-worker

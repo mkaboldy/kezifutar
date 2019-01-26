@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { HomeComponent } from './components/home/home.component';
 import { TimetableComponent } from './components/timetable/timetable.component';
 import { LocationComponent } from './components/location/location.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -8,6 +9,7 @@ import { AboutComponent } from './components/about/about.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/location', pathMatch: 'full'},
+    { path: 'home', component: HomeComponent },
     { path: 'departures/:stopId', component: TimetableComponent },
     { path: 'departures',  redirectTo: '/location', pathMatch: 'full'},
     { path: 'location/:lat/:lon', component: LocationComponent },

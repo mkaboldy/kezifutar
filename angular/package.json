@@ -26,6 +26,7 @@
     "core-js": "^2.6.3",
     "eslint": "^5.12.1",
     "idlejs": "^2.0.1",
+    "ngx-swiper-wrapper": "^7.2.1",
     "rxjs": "~6.2.0",
     "webpack-dev-server": ">=3.1.11",
     "zone.js": "^0.8.29"

@@ -28,4 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Todo
 
+Home page with slider
 Location component : Angular-API conn error management
+Nav review (icons in menu)
+Settings and local storage

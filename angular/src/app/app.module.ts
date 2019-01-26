@@ -11,12 +11,21 @@ import { AppstateService } from './services/appstate.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
 import { TimetableComponent } from './components/timetable/timetable.component';
 import { LocationComponent } from './components/location/location.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 
 import { FooterComponent } from './components/footer/footer.component';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 
 import { CommonSpinnerComponent } from './components/common/spinner/spinner.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -35,7 +44,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SettingsComponent,
     AboutComponent,
     FooterComponent,
-    CommonSpinnerComponent
+    CommonSpinnerComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -53,8 +63,15 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SwiperModule
   ],
-  providers: [AppstateService],
+  providers: [
+    AppstateService,
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

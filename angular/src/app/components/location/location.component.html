@@ -41,39 +41,7 @@
                   </div>
             </div>
             <div *ngIf="positionAcquired || positionError">
-                  <h4>{{ 'LOCATION.POPULAR_LOCATIONS' | translate}}</h4>
-                  <ul>
-                        <li>
-                              <a class="stop location" href="/location/47.5655984/19.0446418">Aquincum</a>
-                        </li>
-                        <li>
-                              <a class="stop location" href="/location/47.5106624/19.0550335">Westend</a>
-                        </li>
-                        <li>
-                              <a class="stop location" href="/location/47.4943933/19.0593575">Astoria</a>
-                        </li>
-                        <li>
-                              <a class="stop location" href="/location/47.4740142/19.0480375">Allee</a>
-                        </li>
-                        <li>
-                              <a class="stop location" href="/location/47.49037/19.02356">MOM Park</a>
-                        </li>
-                        <li>
-                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F02439', type: 'BUS', name: 'Thomán István utca'})">Thomán István utca</a>
-                        </li>
-                        <li>
-                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F02454', type: 'BUS', name: 'Csillebérc'})">Csillebérc</a>
-                        </li>
-                        <li>
-                              <a (click)="collapseNav()" class="stop BUS" href="#" (click)="selectStop({id: 'BKK_F04816', type: 'BUS', name: 'Diósd, Kölcsey F. u.'})">Diósd, Kölcsey Ferenc utca</a>
-                        </li>
-                        <li>
-                              <a (click)="collapseNav()" class="stop TRAM" href="#" (click)="selectStop({id: 'BKK_F02101', type: 'TRAM', name: 'Farkasréti temető'})">Farkasréti temető</a>
-                        </li>
-                        <li>
-                              <a (click)="collapseNav()" class="stop TRAM" href="#" (click)="selectStop({id: 'BKK_F01596', type: 'TRAM', name: 'Új Köztemető és Börtön'})">Új Köztemető</a>
-                        </li>
-                  </ul>
+                  <app-popular-locations [parent]="this"></app-popular-locations>
                   <p>Your detected GPS position: <a href="https://maps.google.com/maps/@{{position.coords.latitude}},{{position.coords.longitude}}" target="_blank">{{position.coords.latitude}},{{position.coords.longitude}}:{{position.coords.heading}}</a></p>
             </div>
       </div>

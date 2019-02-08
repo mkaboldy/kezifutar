@@ -1,0 +1,7 @@
+ul {list-style: none; padding-left: 0;}
+ul li a {font-size: 1.3rem;}
+.stop {color: white;}
+.stop.BUS, .stop.NIGHTBUS { color: deepskyblue }
+.stop.TRAM { color: gold }
+.stop.TROLLEYBUS {color: red}
+.stop.H5, .stop.H6, .stop.H7, .stop.H8 {color:limegreen }

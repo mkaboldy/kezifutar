@@ -32,3 +32,4 @@ Home page with slider
 Location component : Angular-API conn error management
 Nav review (icons in menu)
 Settings and local storage
+convert css to scss

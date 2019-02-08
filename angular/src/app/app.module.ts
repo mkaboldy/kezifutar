@@ -14,6 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { TimetableComponent } from './components/timetable/timetable.component';
 import { LocationComponent } from './components/location/location.component';
+import { PopularLocationsComponent } from './components/location/popular-locations/popular-locations.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 
@@ -31,6 +32,7 @@ import { CommonSpinnerComponent } from './components/common/spinner/spinner.comp
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -41,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NavbarComponent,
     TimetableComponent,
     LocationComponent,
+    PopularLocationsComponent,
     SettingsComponent,
     AboutComponent,
     FooterComponent,

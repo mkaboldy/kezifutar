@@ -1,0 +1,9 @@
+<h4>{{ 'LOCATION.POPULAR_LOCATIONS' | translate}}</h4>
+<ul>
+  <li *ngFor="let loc of this.popularCoords">
+    <a href="#" (click)="parent.collapseNav()" class="stop location" routerLink="/location/{{ loc.coord.lat }}/{{ loc.coord.lon }}">{{ loc.name }}</a>
+  </li>
+  <li *ngFor="let stop of this.popularStops">
+    <a href="#" (click)="parent.collapseNav()" class="stop {{ stop.type}}" routerLink="/departures/{{ stop.id }}">{{ stop.name }}</a>
+  </li>
+</ul>

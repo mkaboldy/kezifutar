@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppstateService } from '../../services/appstate.service';
 import { BkkService } from '../../services/bkk.service';
 import { GeolocationService } from '../../services/geolocation.service';
+import { PopularLocationsComponent } from './popular-locations/popular-locations.component';
+
+interface LocationParent {
+  collapseNav(): void;
+}
 
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.css']
 })
-export class LocationComponent implements OnInit {
+
+export class LocationComponent implements OnInit, LocationParent {
 
   availableStops: Array<any>;
   position: Position;
   positionAcquired: boolean;
   positionError: PositionError;
   loadError: boolean;
+
+  @ViewChild(PopularLocationsComponent) popularLocations: PopularLocationsComponent;
 
   constructor(
     protected  appState: AppstateService,
@@ -26,6 +34,8 @@ export class LocationComponent implements OnInit {
     ) {
       this.availableStops = [];
       this.loadError = false;
+      this.popularLocations = new PopularLocationsComponent;
+      console.log(this);
     }
 
   setAvailableStops(stopsForLocation) {
@@ -48,11 +58,6 @@ export class LocationComponent implements OnInit {
         this.loadError = error;
       }
     );
-  }
-
-  selectStop(stop: Object) {
-    this.router.navigate(['/departures/' + stop['id']]);
-    return false;
   }
 
   // TODO refactor this

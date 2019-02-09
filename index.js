@@ -23,24 +23,7 @@ if (!fs.existsSync(configFile)) {
 }
 
 const config = require(configFile);
-app.use(function(req, res, next) {
 
-    if ((req.protocol !== 'https')) {
-
-        const ssl_host = 
-            (config.https_host && config.https_port) ? 
-            config.https_host +":"+ config.https_port : 
-            req.get('Host');
-
-        const redirect = 'https://' + ssl_host + req.url;
-
-        console.log("redirected to: "+redirect);
-
-        res.redirect(301,redirect);
-    } else {
-        next();
-    }
-});
 app.use(compression());
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));

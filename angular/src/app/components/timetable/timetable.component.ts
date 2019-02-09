@@ -50,9 +50,9 @@ export class TimetableComponent implements OnInit {
 
   loadTimetable(stopId?: string) {
     if (stopId) {
-      const subscription = this._bkkService.getArrivalsAndDeparturesForStop(stopId).subscribe( (arrivalsAndDeparturesForStop) => {
+      const subscription = this._bkkService.getArrivalsAndDeparturesForStops(stopId).subscribe( (arrivalsAndDeparturesForStops) => {
           this.loadError = false;
-          this.setTimeTable(arrivalsAndDeparturesForStop);
+          this.setTimeTable(arrivalsAndDeparturesForStops);
         },
         (error) => {
           this.loadError = true;
@@ -84,13 +84,13 @@ export class TimetableComponent implements OnInit {
     return Math.ceil(diff / (60 * 1000));
   }
 
-  private setTimeTable(arrivalsAndDeparturesForStop) {
+  private setTimeTable(arrivalsAndDeparturesForStops) {
     // merge then sort timetables
     let stopTimes = [];
     let trips = new Object();
     let routes = new Object();
     let stops = new Object();
-    arrivalsAndDeparturesForStop.forEach(element => {
+    arrivalsAndDeparturesForStops.forEach(element => {
       stopTimes = stopTimes.concat(element.data.entry.stopTimes);
       trips =  {...trips, ...element.data.references.trips};
       routes = {...routes, ...element.data.references.routes};

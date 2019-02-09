@@ -42,7 +42,6 @@
             </div>
             <div *ngIf="positionAcquired || positionError">
                   <app-popular-locations [parent]="this"></app-popular-locations>
-                  <p>Your detected GPS position: <a href="https://maps.google.com/maps/@{{position.coords.latitude}},{{position.coords.longitude}}" target="_blank">{{position.coords.latitude}},{{position.coords.longitude}}:{{position.coords.heading}}</a></p>
             </div>
       </div>
 </div>

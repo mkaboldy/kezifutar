@@ -6,6 +6,7 @@ const http = require('http');
 const https = require('https');
 const router = express.Router();
 const api = require('./api')(router);
+const demo = require('./demo')(router);
 const path = require('path'); 
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/angular/dist/angular/')); // Provide static directory for frontend
 
 app.use('/api',api);
+app.use('/api/demo',demo);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/angular/dist/angular/index.html'));

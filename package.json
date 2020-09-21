@@ -18,16 +18,13 @@
   },
   "homepage": "https://github.com/mkaboldy/kezifutar#readme",
   "dependencies": {
-    "@angular/compiler-cli": "^7.2.4",
-    "axios": "^0.18.1",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
+    "axios": "^0.18.1",
     "express": "^4.16.4"
   },
   "engines": {
     "node": "8.x"
   },
-  "devDependencies": {
-    "@angular/cli": "^10.1.0"
-  }
+  "devDependencies": {}
 }

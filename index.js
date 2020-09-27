@@ -5,8 +5,7 @@ const fs = require('fs');
 const http = require('http');
 const https = require('https');
 const router = express.Router();
-const api = require('./api')(router);
-const demo = require('./demo')(router);
+const bkk = require('./api/1.0/bkk')(router);
 const path = require('path'); 
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -29,13 +28,12 @@ app.use(compression());
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/angular/dist/angular/')); // Provide static directory for frontend
+app.use(express.static(`${__dirname}/angular10/dist/angular10/`)); // Provide static directory for frontend
 
-app.use('/api',api);
-app.use('/api/demo',demo);
+app.use('/api/1.0/bkk',bkk);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/angular/dist/angular/index.html'));
+    res.sendFile(path.join(__dirname + '/angular10/dist/angular10/index.html'));
 });
 
 const httpServer = http.createServer(app);
@@ -44,14 +42,6 @@ const http_port = config.http_port;
 const http_host = config.http_host;
 
 console.log("process.env.NODE_ENV: " + process.env.NODE_ENV);
-if (http_host) {
-    console.log("starting server " + http_host + ":" + http_port);
-    httpServer.listen(http_port, http_host);
-} else {
-    console.log("starting server on port " + http_port);
-    httpServer.listen(http_port);
-}
-
 
 if (config.ssl_key && config.ssl_cert && config.https_host && config.https_port) {
     const privateKey  = fs.readFileSync(config.ssl_key, 'utf8');
@@ -59,7 +49,15 @@ if (config.ssl_key && config.ssl_cert && config.https_host && config.https_port)
     const credentials = {key: privateKey, cert: certificate};
 
     const httpsServer = https.createServer(credentials, app);
-    console.log("starting https server " + config.https_host + ":" + config.https_port);
+    console.log("starting server https://" + config.https_host + ":" + config.https_port);
     httpsServer.listen(config.https_port, config.https_host);
+} else {
+    if (http_host) {
+        console.log("starting server http://" + http_host + ":" + http_port);
+        httpServer.listen(http_port, http_host);
+    } else {
+        console.log("starting server http://localhost:" + http_port);
+        httpServer.listen(http_port);
+    }    
 }
 

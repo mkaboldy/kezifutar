@@ -4,29 +4,11 @@
             <div>
                 <h4>Stations near you:</h4>
                 <ul>
-                    <li>
-                        <a class="stop BUS" href="/departures/BKK_F04816">Kölcsey Ferenc utca</a>
-                    </li>
-                    <li>
-                        <a class="stop BUS" href="/departures/BKK_F04773">Csapágygyár</a>
+                    <li *ngFor="let station of availableStations">
+                        <a class="stop" href="#">{{station.name}}</a>
                     </li>
                 </ul>
             </div>
-        </div>
-        <div>
-            <h4>Popular locations:</h4>
-            <ul>
-                <li><a class="stop location" href="/location/47.5655984/19.0446418">Aquincum</a></li>
-                <li><a class="stop location" href="/location/47.5106624/19.0550335">Westend</a></li>
-                <li><a class="stop location" href="/location/47.4943933/19.0593575">Astoria</a></li>
-                <li><a class="stop location" href="/location/47.4740142/19.0480375">Allee</a></li>
-                <li><a class="stop location" href="/location/47.49037/19.02356">MOM Park</a></li>
-                <li><a class="stop BUS" href="#">Thomán István utca</a></li>
-                <li><a class="stop BUS" href="#">Csillebérc</a></li>
-                <li><a class="stop BUS" href="#">Diósd, Kölcsey Ferenc utca</a></li>
-                <li><a class="stop TRAM" href="#">Farkasréti temető</a></li>
-                <li><a class="stop TRAM" href="#">Új Köztemető</a></li>
-            </ul>
         </div>
     </div>
 </div>

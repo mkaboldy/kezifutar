@@ -9,6 +9,7 @@ import { AboutComponent } from './components/about/about.component';
 const routes: Routes = [
     { path: '', redirectTo: '/location', pathMatch: 'full'},
     { path: 'departures', component: DeparturesComponent },
+    { path: 'location/:latlon', component: LocationComponent },
     { path: 'location', component: LocationComponent },
     { path: 'settings', component: SettingsComponent},
     { path: 'about', component: AboutComponent},

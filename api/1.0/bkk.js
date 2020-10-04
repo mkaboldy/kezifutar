@@ -1,5 +1,5 @@
 const util = require('util');
-const axios = require('axios');
+const axios = require('axios').default;
 const apiRoot = 'https://futar.bkk.hu/api/query/v1/ws/otp/api/where';
 
 module.exports = (router) => {
@@ -71,6 +71,41 @@ module.exports = (router) => {
                 // anything else
             }            
         });        
+    });
+
+    router.get('/departures-for-stops/:stops', (req, res) => {
+        const stops = req.params.stops.split(',');
+        const endPoint = 'arrivals-and-departures-for-stop.json';
+        var requests = [];
+        var apiResponses = [];
+        stops.forEach((stop)=>{
+            const request = util.format('%s/%s?%s&%s&%s&%s', 
+                apiRoot, 
+                endPoint,
+                util.format('includeReferences=%s','agencies,routes,trips,stops'),
+                util.format('stopId=%s',stop),
+                util.format('minutesBefore=%s',1),
+                util.format('minutesAfter=%s',30)
+            );
+            requests.push(axios.get(request));
+        });
+
+        axios.all(requests)
+            .then(axios.spread((...responses) => {
+                responses.forEach(response=>{
+                    apiResponses.push(response.data);
+                });
+                response = [];
+                apiResponses.forEach(apiResponse => {
+                    console.log(apiResponse);
+                });
+                res.send(response);
+            }))
+            .catch(errors => {
+                errors.forEach(error => {
+                    console.error(error);
+                });
+            });
     });
 
     return router;

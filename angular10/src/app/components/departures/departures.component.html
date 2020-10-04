@@ -1,50 +1,20 @@
 <div class="container departures">
     <div class="jumbotron">
         <div>
-            <h4 class="stop TRAM">Csörsz utca</h4>
+            <h4 class="stop TRAM">{{departureBoard.station.name}}</h4>
             <table  width="100%">
                 <thead>
                     <tr>
                         <th class="line">Line</th>
-                        <th class="stopHeadSign">Destination</th>
+                        <th class="destination">Destination</th>
                         <th class="departure">Departure <small >(mins)</small></th>
                     </tr>
                 </thead>
                 <tbody >
-                    <tr class="blink">
-                        <td class="line">61</td>
-                        <td class="stopHeadSign">Hűvösvölgy</td>
-                        <td class="departure"></td>
-                    </tr>
-                    <tr>
-                        <td class="line">17</td>
-                        <td class="stopHeadSign">Bécsi út / Vörösvári út</td>
-                        <td class="departure">5'</td>
-                    </tr>
-                    <tr>
-                        <td class="line">17</td>
-                        <td class="stopHeadSign">Bécsi út / Vörösvári út</td>
-                        <td class="departure">10'</td>
-                    </tr>
-                    <tr>
-                        <td class="line">61</td>
-                        <td class="stopHeadSign">Hűvösvölgy</td>
-                        <td class="departure">14'</td>
-                    </tr>
-                    <tr>
-                        <td class="line">17</td>
-                        <td class="stopHeadSign">Bécsi út / Vörösvári út</td>
-                        <td class="departure">23'</td>
-                    </tr>
-                    <tr>
-                        <td class="line">17</td>
-                        <td class="stopHeadSign">Bécsi út / Vörösvári út</td>
-                        <td class="departure">25'</td>
-                    </tr>
-                    <tr>
-                        <td class="line">61</td>
-                        <td class="stopHeadSign">Hűvösvölgy</td>
-                        <td class="departure">29'</td>
+                    <tr *ngFor="let departure of departureBoard.departures" [ngClass]="departure.departing ? 'blink' : ''">
+                        <td class="line">{{departure.line}}</td>
+                        <td class="destination">{{departure.destination}}</td>
+                        <td class="departure">{{departure.departure}}</td>
                     </tr>
                 </tbody>
             </table>

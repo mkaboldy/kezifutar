@@ -95,16 +95,65 @@ module.exports = (router) => {
                 responses.forEach(response=>{
                     apiResponses.push(response.data);
                 });
-                response = [];
+                const response = {
+                    stations: {},
+                    
+                };
+                // prepare stations in case multiple departure boards will be needed
                 apiResponses.forEach(apiResponse => {
-                    console.log(apiResponse);
+                    const stopReferences = apiResponse.data.references.stops;
+                    Object.keys(stopReferences).forEach((stop)=>{
+                        const parentStationId = stopReferences[stop].parentStationId;
+                        const parentStation = {
+                            ID: parentStationId,
+                            name: stopReferences[stop].name,
+                            departures: [],
+                        };
+                        response.stations[parentStationId] = parentStation;
+                    });
                 });
-                res.send(response);
+                // add departures to the station departure boards
+                apiResponses.forEach(apiResponse => {
+                    apiResponse.data.entry.stopTimes.forEach(stopTime => {
+                        const parentStationId = apiResponse.data.references.stops[apiResponse.data.entry.stopId].parentStationId;
+                        const trip = apiResponse.data.references.trips[stopTime.tripId]; 
+                        const route = apiResponse.data.references.routes[trip.routeId];
+                        const vehicleType = route.type;
+                        const line = route.shortName;
+                        const lineDescription = route.description;
+                        const currentTime = new Date(apiResponse.currentTime);
+                        const departureTime = new Date(stopTime.predictedDepartureTime ? stopTime.predictedDepartureTime * 1000 : stopTime.departureTime * 1000);
+                        const departureMins = Math.ceil( (departureTime.getTime() - currentTime.getTime()) / (60 * 1000));
+                        const departure = {
+                            line: line,
+                            lineDescription: lineDescription,
+                            vehicleType: vehicleType,
+                            destination: stopTime.stopHeadsign,
+                            departureMins: departureMins,
+                        };
+                        response.stations[parentStationId].departures.push(departure);
+                    });
+                });
+                // reorder departure boards by departure mins
+                Object.values(response.stations).forEach(station=>{
+                    station.departures.sort((a, b) => a.departureMins > b.departureMins ? 1 : -1);
+                });
+                res.json(response);
             }))
-            .catch(errors => {
-                errors.forEach(error => {
+            .catch(error => {
+                if (error.response) {
+                    // client received an error response (5xx, 4xx)
+                    res.status(error.response.status).send(error.response.data);
+                    console.error(error.response.data);
+                } else if (error.request) {
+                    // client never received a response, or request never left
+                    res.status(503).send(error.request.data);
+                    console.error(error.request.data);
+                } else {
+                    res.status(500).send('unable to serve the request');
                     console.error(error);
-                });
+                    // anything else
+                }            
             });
     });
 

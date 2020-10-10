@@ -1,7 +1,7 @@
 <div class="container departures">
-    <div class="jumbotron">
+    <div *ngFor="let departureBoard of departureBoards.stations | keyvalue" class="jumbotron">
         <div>
-            <h4 class="stop TRAM">{{departureBoard.station.name}}</h4>
+            <h4 class="stop TRAM">{{departureBoard.value.name}}</h4>
             <table  width="100%">
                 <thead>
                     <tr>
@@ -11,10 +11,10 @@
                     </tr>
                 </thead>
                 <tbody >
-                    <tr *ngFor="let departure of departureBoard.departures" [ngClass]="departure.departing ? 'blink' : ''">
+                    <tr *ngFor="let departure of departureBoard.value.departures" class="{{departure.vehicleType}}" [ngClass]="departure.departureMins == 0 ? 'blink' : ''">
                         <td class="line">{{departure.line}}</td>
                         <td class="destination">{{departure.destination}}</td>
-                        <td class="departure">{{departure.departure}}</td>
+                        <td class="departure">{{departure.departureMins == 0 ? '' : departure.departureMins+'`'}}</td>
                     </tr>
                 </tbody>
             </table>

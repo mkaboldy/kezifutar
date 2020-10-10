@@ -1,7 +1,21 @@
+tr {
+    &.TRAM td{
+        color : gold; 
+    }
+    &.BUS td {
+        color: deepskyblue;
+    }
+    &.RAIL td {
+        color: limegreen;
+    }
+    &.TROLLEYBUS td {
+        color: red
+    }    
+}
 td {
     font-family: led_matrix2regular;
-    color : orange; 
-    font-size: 1.1rem 
+    color : #ccc; 
+    font-size: 1.1rem; 
 }
 
 th, td {

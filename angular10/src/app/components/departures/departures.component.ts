@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BkkService } from '../../services/bkk.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Station} from '../../interfaces/station';
 
 @Component({
@@ -15,6 +16,8 @@ export class DeparturesComponent implements OnInit {
 
   constructor(
     private bkkService: BkkService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.departureBoards = {
       stations: {
@@ -126,6 +129,14 @@ export class DeparturesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const stops = this.route.snapshot.paramMap.get('stops').split(',');
+    const data = this.bkkService.getDeparturesForStos(stops).subscribe(
+      (departuresForStops) => {
+        this.departureBoards = departuresForStops;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
 }

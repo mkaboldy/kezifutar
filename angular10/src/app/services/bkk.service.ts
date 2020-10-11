@@ -17,4 +17,9 @@ export class BkkService {
     const query = this.apiRoot + '/bkk/stations-for-location/' + lat + ',' + lon;
     return this.http.get(query);
   }
+
+  getDeparturesForStos(stops: Array<string>): Observable<any> {
+    const query = this.apiRoot + '/bkk/departures-for-stops/' + stops.join(',');
+    return this.http.get(query);
+  }
 }

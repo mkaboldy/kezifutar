@@ -8,5 +8,10 @@ export interface Station {
     rail: boolean,
     subway: boolean,
   };
-  stops?: Array<string>;
+  stops?: Array<Stop>;
+  stopCodeList: string;
+}
+
+export interface Stop {
+  id: string;
 }

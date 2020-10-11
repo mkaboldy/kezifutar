@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Station} from '../../interfaces/station';
+import { Station, Stop} from '../../interfaces/station';
 import { BkkService } from '../../services/bkk.service';
 
 @Component({
@@ -29,8 +29,9 @@ export class LocationComponent implements OnInit {
           subway: false,
         },
         stops: [
-          'BKK_043343', 'BKK_F02417', 'BKK_05566'
-        ]
+          {id: 'BKK_043343'}, {id: 'BKK_F02417'}, {id: 'BKK_05566'}
+        ],
+        stopCodeList: 'BKK_043343,BKK_F02417,BKK_05566',
       },
     ];
   }
@@ -42,6 +43,11 @@ export class LocationComponent implements OnInit {
     const data = this.bkkService.getStationsForLocation(lat, lon).subscribe(
       (stationsForLocation) => {
         this.availableStations = stationsForLocation.stations;
+        this.availableStations.forEach(station => {
+          const stopCodes = [];
+          station.stops.forEach((stop: Stop) => stopCodes.push(stop.id));
+          station.stopCodeList = stopCodes.join(',');
+        });
       },
       (error) => {
         console.log(error);

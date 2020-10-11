@@ -5,7 +5,7 @@
                 <h4>Stations near you:</h4>
                 <ul>
                     <li *ngFor="let station of availableStations">
-                        <a class="stop" href="#">{{station.name}}</a>
+                        <a class="stop" href="#" routerLink="/departures/{{station.stopCodeList}}">{{station.name}}</a>
                     </li>
                 </ul>
             </div>

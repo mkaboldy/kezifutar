@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Station, Stop} from '../../interfaces/station';
 import { BkkService } from '../../services/bkk.service';
+
+interface LatLon {
+  lat: number;
+  lon: number;
+}
 
 @Component({
   selector: 'app-location',
@@ -13,9 +18,8 @@ export class LocationComponent implements OnInit {
   availableStations: Array<Station> = [];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private bkkService: BkkService,
+    private route: ActivatedRoute,
   ) {
     this.availableStations = [
       {
@@ -36,11 +40,8 @@ export class LocationComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void {
-    const latlon = this.route.snapshot.paramMap.get('latlon').split(',');
-    const lat = parseFloat(latlon[0]);
-    const lon = parseFloat(latlon[1]);
-    const data = this.bkkService.getStationsForLocation(lat, lon).subscribe(
+  private loadBoards(latlon: LatLon): void{
+    const data = this.bkkService.getStationsForLocation(latlon.lat, latlon.lon).subscribe(
       (stationsForLocation) => {
         this.availableStations = stationsForLocation.stations;
         this.availableStations.forEach(station => {
@@ -53,5 +54,28 @@ export class LocationComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  ngOnInit(): void {
+
+    const paramLatLon = this.route.snapshot.paramMap.get('latlon');
+
+    if (paramLatLon) {
+      const latlons = paramLatLon.split(',');
+      const lat = parseFloat(latlons[0]);
+      const lon = parseFloat(latlons[1]);
+      this.loadBoards({lat, lon});
+    } else {
+      if (window.navigator && window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+          (position: Position) => {
+            this.loadBoards({lat: position.coords.latitude, lon: position.coords.longitude})
+          },
+          (error) => console.error(error)
+        );
+      } else {
+        console.error({code: -1, message: 'Unsupported Browser'});
+      }
+    }
   }
 }

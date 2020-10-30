@@ -9,7 +9,7 @@ import { AboutComponent } from './components/about/about.component';
 const routes: Routes = [
     { path: '', redirectTo: '/location', pathMatch: 'full'},
     { path: 'departures/:stops', component: DeparturesComponent },
-    { path: 'departures', component: DeparturesComponent },
+    { path: 'departures', redirectTo: '/location', pathMatch: 'full' },
     { path: 'location/:latlon', component: LocationComponent },
     { path: 'location', component: LocationComponent },
     { path: 'settings', component: SettingsComponent},

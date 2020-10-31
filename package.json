@@ -18,10 +18,11 @@
   },
   "homepage": "https://github.com/mkaboldy/kezifutar#readme",
   "dependencies": {
+    "axios": "^0.18.1",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
-    "axios": "^0.18.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "nodemon": "^2.0.6"
   },
   "engines": {
     "node": "8.x"

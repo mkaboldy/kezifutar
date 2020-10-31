@@ -13,14 +13,21 @@ interface LatLon {
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss']
 })
+
 export class LocationComponent implements OnInit {
 
   availableStations: Array<Station> = [];
+  positionAvailable = false;
+  positionFailed = false;
+  isLoading = true;
+  loadingFailed = false;
 
   constructor(
     private bkkService: BkkService,
     private route: ActivatedRoute,
-  ) {
+  ) {}
+
+/*
     this.availableStations = [
       {
         ID: 'F1202',
@@ -39,6 +46,7 @@ export class LocationComponent implements OnInit {
       },
     ];
   }
+*/
 
   private loadBoards(latlon: LatLon): void{
     const data = this.bkkService.getStationsForLocation(latlon.lat, latlon.lon).subscribe(
@@ -51,7 +59,12 @@ export class LocationComponent implements OnInit {
         });
       },
       (error) => {
+        this.isLoading = false;
+        this.loadingFailed = true;
         console.log(error);
+      },
+      () => {
+        this.isLoading = false;
       }
     );
   }
@@ -61,6 +74,7 @@ export class LocationComponent implements OnInit {
     const paramLatLon = this.route.snapshot.paramMap.get('latlon');
 
     if (paramLatLon) {
+      this.positionAvailable = true;
       const latlons = paramLatLon.split(',');
       const lat = parseFloat(latlons[0]);
       const lon = parseFloat(latlons[1]);
@@ -69,11 +83,16 @@ export class LocationComponent implements OnInit {
       if (window.navigator && window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
           (position: Position) => {
+            this.positionAvailable = true;
             this.loadBoards({lat: position.coords.latitude, lon: position.coords.longitude})
           },
-          (error) => console.error(error)
+          (error) => {
+            this.positionFailed = true;
+            console.error(error);
+          }
         );
       } else {
+        this.positionFailed = true;
         console.error({code: -1, message: 'Unsupported Browser'});
       }
     }

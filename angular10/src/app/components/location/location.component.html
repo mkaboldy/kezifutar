@@ -27,10 +27,10 @@
                 <ng-template #loadingSuccessBlock>
                     <div *ngIf="availableStations.length > 0; else noStationFoundBlock">
                         <div>
-                            <h4>Stations near you:</h4>
+                            <h2>Stations near you:</h2>
                             <ul>
                                 <li *ngFor="let station of availableStations">
-                                    <a class="stop" href="#" routerLink="/departures/{{station.stopCodeList}}">{{station.name}}</a>
+                                    <h4><a class="stop" href="#" routerLink="/departures/{{station.stopCodeList}}">{{station.name}}</a></h4>
                                 </li>
                             </ul>
                         </div>

@@ -4,6 +4,7 @@ $body-color: #888;
 $font-size-base: 0.875rem;
 $font-family-base: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
+$headings-color: #fff;
 // Bootstrap and its default variables
 @import "node_modules/bootstrap/scss/bootstrap";
 
@@ -18,6 +19,10 @@ body {
     padding-top: 4.5rem;    
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+}
+
+th {
+    color:$headings-color;
 }
 
 main {

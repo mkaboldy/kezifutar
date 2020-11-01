@@ -10,15 +10,21 @@ import { Station} from '../../interfaces/station';
 })
 export class DeparturesComponent implements OnInit {
 
+  isLoading = true;
+  loadingFailed = false;
+
   departureBoards: {
     stations: any
   };
+
 
   constructor(
     private bkkService: BkkService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
+    this.departureBoards = { stations: {}};
+/*
     this.departureBoards = {
       stations: {
         BKK_CSF00065: {
@@ -126,16 +132,23 @@ export class DeparturesComponent implements OnInit {
         }
       }
     };
+*/
   }
 
   ngOnInit(): void {
     const stops = this.route.snapshot.paramMap.get('stops').split(',');
     const data = this.bkkService.getDeparturesForStos(stops).subscribe(
       (departuresForStops) => {
+        this.isLoading = false;
         this.departureBoards = departuresForStops;
       },
       (error) => {
+        this.isLoading = false;
+        this.loadingFailed = true;
         console.log(error);
+      },
+      () => {
+        this.isLoading = false;
       }
     );
   }

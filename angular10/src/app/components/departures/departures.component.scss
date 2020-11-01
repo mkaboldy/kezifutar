@@ -1,3 +1,6 @@
+.departureboard {
+    margin-bottom: 1rem;
+}
 tr {
     &.TRAM td{
         color : gold; 
@@ -26,7 +29,10 @@ th, td {
     text-align: right;
 }
 
-.line {padding-right : 10px;}
+.line {
+    padding-right : 10px;
+    width: 60px;
+}
 
 .blink td {
     animation: blink-animation 1s steps(5, start) infinite;

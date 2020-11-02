@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BkkService } from '../../services/bkk.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
+import { Idle } from 'idlejs/dist';
 import { Station} from '../../interfaces/station';
 
 @Component({
@@ -8,15 +10,20 @@ import { Station} from '../../interfaces/station';
   templateUrl: './departures.component.html',
   styleUrls: ['./departures.component.scss']
 })
+
 export class DeparturesComponent implements OnInit {
 
-  isLoading = true;
-  loadingFailed = false;
+  public isLoading = true;
+  public loadingFailed = false;
+  private refreshSubscription: Subscription;
+  private refreshFrequencySecs = 15;
+  private idle = new Idle();
+  public userIsIdle = false;
+  public userTimeoutMins = 2;
 
   departureBoards: {
     stations: any
   };
-
 
   constructor(
     private bkkService: BkkService,
@@ -135,7 +142,7 @@ export class DeparturesComponent implements OnInit {
 */
   }
 
-  ngOnInit(): void {
+  loadDepartureBoards(): void {
     const stops = this.route.snapshot.paramMap.get('stops').split(',');
     const data = this.bkkService.getDeparturesForStos(stops).subscribe(
       (departuresForStops) => {
@@ -151,5 +158,42 @@ export class DeparturesComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  renderDepartureBoards(): void {
+    // this.refreshSubscription.unsubscribe();
+    this.loadDepartureBoards();
+    const refreshTimer = interval(this.refreshFrequencySecs * 1000);
+
+    this.refreshSubscription = refreshTimer.subscribe(
+      (n) => {
+        this.loadDepartureBoards();
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        this.refreshSubscription.unsubscribe();
+      }
+    );
+  }
+
+  resumeClick(): void {
+    this.renderDepartureBoards();
+    this.userIsIdle = false;
+    this.idle.restart();
+  }
+
+  ngOnInit(): void {
+
+    this.renderDepartureBoards();
+
+    this.idle.whenNotInteractive()
+      .within(this.userTimeoutMins)
+      .do(() => {
+        this.userIsIdle = true;
+        this.refreshSubscription.unsubscribe();
+      })
+      .start();
   }
 }

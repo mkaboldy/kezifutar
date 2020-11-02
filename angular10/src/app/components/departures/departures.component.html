@@ -46,3 +46,15 @@
         </ng-template>        
     </div>
 </div>
+<div id="suspended" *ngIf="userIsIdle">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header"></div>
+            <div class="modal-body text-center">
+                <p>Connection suspended after {{userTimeoutMins}} minutes of inactivity to save your bandwidth.</p>
+                <p><button type="button" class="btn btn-primary" (click)="resumeClick()">Resume</button></p>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

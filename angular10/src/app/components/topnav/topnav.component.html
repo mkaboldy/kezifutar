@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">
         <img alt="logo" src="assets/images/logo.png">
     </a>
@@ -8,16 +8,16 @@
     <div class="navbar-collapse collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/departures" routerLinkActive="active">Departures</a>
+                <a (click)="collapseNav()" class="nav-link" routerLink="/location" routerLinkActive="active">Location</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/location" routerLinkActive="active">Location</a>
+                <a (click)="collapseNav()" class="nav-link" routerLink="/departures" routerLinkActive="active">Departures</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/settings" routerLinkActive="active">Settings</a>
+                <a (click)="collapseNav()" class="nav-link" routerLink="/settings" routerLinkActive="active">Settings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
+                <a (click)="collapseNav()" class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
             </li>
         </ul>
     </div>

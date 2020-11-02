@@ -9,6 +9,10 @@ export class TopnavComponent implements OnInit {
 
   constructor() { }
 
+  collapseNav(): void {
+    document.getElementById('navbarToggler').click();
+  }
+
   ngOnInit(): void {
   }
 

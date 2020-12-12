@@ -16,6 +16,10 @@ import { LocationComponent } from './components/location/location.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +35,8 @@ import { AboutComponent } from './components/about/about.component';
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent]

@@ -10,7 +10,6 @@ $headings-color: #fff;
 $modal-content-bg: rgb(34,34,34);
 // Bootstrap and its default variables
 @import "node_modules/bootstrap/scss/bootstrap";
-@import "./../node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css";
 
 html {
     position: relative;
@@ -44,3 +43,5 @@ footer {
     background-color: #f5f5f5;
     text-align: center;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

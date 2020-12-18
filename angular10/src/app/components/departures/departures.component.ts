@@ -17,6 +17,8 @@ export class DeparturesComponent implements OnInit {
   public loadingFailed = false;
   private refreshSubscription: Subscription;
   private refreshFrequencySecs = 15;
+  private maxLines = 0;
+  private showMetros = true;
   private idle = new Idle();
   public userIsIdle = false;
   public userTimeoutMins = 2;
@@ -31,6 +33,8 @@ export class DeparturesComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.departureBoards = { stations: {}};
+    this.maxLines = 10;
+    this.showMetros = false;
 /*
     this.departureBoards = {
       stations: {
@@ -146,6 +150,20 @@ export class DeparturesComponent implements OnInit {
     const stops = this.route.snapshot.paramMap.get('stops').split(',');
     const data = this.bkkService.getDeparturesForStos(stops).subscribe(
       (departuresForStops) => {
+        const stations = Object.keys(departuresForStops.stations);
+        stations.forEach(station => {
+          if (!this.showMetros) {
+            departuresForStops.stations[station].departures = departuresForStops.stations[station].departures.filter(departure =>
+              !['SUBWAY', 'RAIL'].some(element => element === departure.vehicleType)
+            );
+          }
+          if (this.maxLines > 0) {
+            departuresForStops.stations[station].departures =
+            departuresForStops.stations[station].departures.length
+              ? departuresForStops.stations[station].departures.slice(0, this.maxLines)
+              : [] ;
+          }
+        });
         this.isLoading = false;
         this.departureBoards = departuresForStops;
       },

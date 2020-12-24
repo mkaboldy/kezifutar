@@ -1,0 +1,47 @@
+<div class="container location">
+    <div class="jumbotron">
+        <div *ngIf="(!positionAvailable); then askAllowBlock else positionAvailableBlock"></div>
+        <ng-template #askAllowBlock>
+            <div *ngIf="!positionFailed; else positionFailedBlock" class="alert alert-primary">
+                Please allow the app to know your location.
+            </div>
+            <ng-template #positionFailedBlock>
+                <div class="alert alert-warning" role="alert">
+                    Your position couldn't be determined.
+                </div>    
+            </ng-template>
+        </ng-template>
+        <ng-template #positionAvailableBlock>
+            <div *ngIf="isLoading; else loadingCompleteBlock">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <ng-template #loadingCompleteBlock>
+                <div *ngIf="loadingFailed; then loadingFailedBlock else loadingSuccessBlock"></div>
+                <ng-template #loadingFailedBlock>
+                    <div class="alert alert-danger" role="alert">
+                        Unable to load stations.
+                    </div>    
+                </ng-template>
+                <ng-template #loadingSuccessBlock>
+                    <div *ngIf="availableStations.length > 0; else noStationFoundBlock">
+                        <div>
+                            <h2>Stations near you:</h2>
+                            <ul>
+                                <li *ngFor="let station of availableStations">
+                                    <h4><a class="stop" href="#" routerLink="/departures/{{station.stopCodeList}}">{{station.name}}</a></h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ng-template #noStationFoundBlock>
+                        <div class="alert alert-secondary" role="alert">
+                            No station found in this area.
+                        </div>    
+                    </ng-template>        
+                </ng-template>
+            </ng-template>
+        </ng-template>
+    </div>
+</div>

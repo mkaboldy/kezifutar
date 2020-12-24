@@ -1,0 +1,60 @@
+<div class="container departures">
+    <div class="jumbotron">
+        <div *ngIf="isLoading; else loadingCompleteBlock">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>    
+        </div>
+        <ng-template #loadingCompleteBlock>
+            <div *ngIf="loadingFailed; else loadingSuccessBlock">
+                <div class="alert alert-danger" role="alert">
+                    Unable to load departures.
+                </div>        
+            </div>
+            <ng-template #loadingSuccessBlock>
+                <div *ngIf="(departureBoards.stations | json) != '{}'; then departuresFoundBlock else departuresNotFoundBlock"></div>
+                <ng-template #departuresFoundBlock>
+                    <div *ngFor="let departureBoard of departureBoards.stations | keyvalue" class="departureboard">
+                        <div>
+                            <h2 class="stop">{{departureBoard.value.name}}</h2>
+                            <table  width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="line">Line</th>
+                                        <th class="destination">Destination</th>
+                                        <th class="departure">Departure <small >(mins)</small></th>
+                                    </tr>
+                                </thead>
+                                <tbody >                            
+                                    <tr *ngFor="let departure of departureBoard.value.departures" class="{{departure.vehicleType}}" [ngClass]="departure.departureMins == 0 ? 'blink' : ''">
+                                        <td class="line">{{departure.line}}</td>
+                                        <td class="destination">{{departure.destination}}</td>
+                                        <td class="departure">{{departure.departureMins == 0 ? '' : departure.departureMins+'`'}}</td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                            <div *ngIf="departureBoard.value.departures.length == 0; then departuresNotFoundBlock"></div>                    
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #departuresNotFoundBlock>
+                    <div class="alert alert-secondary" role="alert">
+                        No departure from this station in the next 30 minutes.
+                    </div>    
+                </ng-template>    
+            </ng-template>
+        </ng-template>        
+    </div>
+</div>
+<div id="suspended" *ngIf="userIsIdle">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header"></div>
+            <div class="modal-body text-center">
+                <p>Connection suspended after {{userTimeoutMins}} minutes of inactivity to save your bandwidth.</p>
+                <p><button type="button" class="btn btn-primary" (click)="resumeClick()">Resume</button></p>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

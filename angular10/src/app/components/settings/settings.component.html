@@ -1,0 +1,23 @@
+<div class="container settings">
+    <div class="jumbotron">
+        <h2 class="page-header">Settings</h2>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Show subways</label>
+                <mat-slide-toggle class="mat-slide-toggle col-sm-1"  [checked]="appSettings.showMetros" (change)="toggleShowMetros($event)"></mat-slide-toggle>
+                <div class="col-sm-8">
+                    <small id="showsubwaysHelp" class="form-text text-muted">Show/hide subways and suburban trains on departure boards.</small>
+                </div>                
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="maxlines">Max lines</label>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control text-right" id="maxlines" aria-describedby="maxlinesHelp" placeholder="0" [value]="appSettings.maxLines" (change)="updateMaxLines($event)">
+                </div>
+                <div class="col-sm-8">
+                    <small id="maxlinesHelp" class="form-text text-muted">Number of maximum lines to show on deparure boards. Zero for no limmit.</small>
+                </div>                
+            </div>
+        </form>
+    </div>
+</div>

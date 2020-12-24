@@ -1,0 +1,66 @@
+.departureboard {
+    margin-bottom: 1rem;
+}
+tr {
+    &.TRAM td{
+        color : gold; 
+    }
+    &.BUS td {
+        color: deepskyblue;
+    }
+    &.RAIL td {
+        color: limegreen;
+    }
+    &.TROLLEYBUS td {
+        color: red
+    }    
+}
+td {
+    font-family: led_matrix2regular;
+    color : #ccc; 
+    font-size: 1.1rem; 
+}
+
+th, td {
+    vertical-align: top;
+}
+
+.line, .departure {
+    text-align: right;
+}
+
+.line {
+    padding-right : 10px;
+    width: 60px;
+}
+
+.blink td {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+#suspended {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+    z-index: 2;
+    cursor: pointer; /* Add a pointer on hover */
+    .modal-header { border-bottom: 0;}
+    .modal-footer { border-top: 0;}
+}

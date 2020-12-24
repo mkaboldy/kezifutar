@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AppsettingsService } from '../../services/appsettings.service';
 import { BkkService } from '../../services/bkk.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { Idle } from 'idlejs/dist';
 import { Station} from '../../interfaces/station';
+import { AppSettings } from 'src/app/classes/app-settings';
 
 @Component({
   selector: 'app-departures',
@@ -17,8 +19,7 @@ export class DeparturesComponent implements OnInit {
   public loadingFailed = false;
   private refreshSubscription: Subscription;
   private refreshFrequencySecs = 15;
-  private maxLines = 0;
-  private showMetros = true;
+  private settings: AppSettings;
   private idle = new Idle();
   public userIsIdle = false;
   public userTimeoutMins = 2;
@@ -31,10 +32,9 @@ export class DeparturesComponent implements OnInit {
     private bkkService: BkkService,
     private router: Router,
     private route: ActivatedRoute,
+    private appSettingsService: AppsettingsService
   ) {
     this.departureBoards = { stations: {}};
-    this.maxLines = 10;
-    this.showMetros = false;
 /*
     this.departureBoards = {
       stations: {
@@ -152,15 +152,15 @@ export class DeparturesComponent implements OnInit {
       (departuresForStops) => {
         const stations = Object.keys(departuresForStops.stations);
         stations.forEach(station => {
-          if (!this.showMetros) {
+          if (!this.settings.showMetros) {
             departuresForStops.stations[station].departures = departuresForStops.stations[station].departures.filter(departure =>
               !['SUBWAY', 'RAIL'].some(element => element === departure.vehicleType)
             );
           }
-          if (this.maxLines > 0) {
+          if (this.settings.maxLines > 0) {
             departuresForStops.stations[station].departures =
             departuresForStops.stations[station].departures.length
-              ? departuresForStops.stations[station].departures.slice(0, this.maxLines)
+              ? departuresForStops.stations[station].departures.slice(0, this.settings.maxLines)
               : [] ;
           }
         });
@@ -203,6 +203,11 @@ export class DeparturesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appSettingsService.getSettings().subscribe(
+      settings => this.settings = settings,
+      () => null,
+      () => {}
+    );
 
     this.renderDepartureBoards();
 

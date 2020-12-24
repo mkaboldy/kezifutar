@@ -84,7 +84,7 @@ export class LocationComponent implements OnInit {
         window.navigator.geolocation.getCurrentPosition(
           (position: Position) => {
             this.positionAvailable = true;
-            this.loadBoards({lat: position.coords.latitude, lon: position.coords.longitude})
+            this.loadBoards({lat: position.coords.latitude, lon: position.coords.longitude});
           },
           (error) => {
             this.positionFailed = true;

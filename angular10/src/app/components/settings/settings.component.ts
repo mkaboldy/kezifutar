@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateMaxLines(event: Event): void {
-    this.appSettings.maxLines = parseInt(event.target.value);
+    this.appSettings.maxLines = parseInt((event.target as HTMLInputElement).value, 10);
     this.appSettingsService.saveSettings(this.appSettings);
   }
 }

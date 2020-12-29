@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppSettings } from 'src/app/classes/app-settings';
+import { AppSettings } from '../../classes/app-settings';
 import { AppsettingsService } from '../../services/appsettings.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 

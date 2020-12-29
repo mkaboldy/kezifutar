@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { Idle } from 'idlejs/dist';
 import { Station} from '../../interfaces/station';
-import { AppSettings } from 'src/app/classes/app-settings';
+import { AppSettings } from '../../classes/app-settings';
 
 @Component({
   selector: 'app-departures',

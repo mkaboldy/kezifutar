@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_root: 'https://192.168.0.228:8043/api/1.0'
+  api_root: 'https://192.168.0.227:8043/api/1.0'
 };
 
 /*
